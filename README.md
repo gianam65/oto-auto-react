@@ -6,7 +6,8 @@
 -- Dependencies project use:
 + axios
 + antd v4.18.9
-+ react-router-dom
++ react-router-dom v5.2.0
++ simple-react-lightbox
 
 -- Server
 + NodeJS

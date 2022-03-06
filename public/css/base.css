@@ -1,0 +1,88 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: inherit;;
+}
+
+html,body {
+    font-size: 62.5%;
+    font-family: "Poppins", Arial, Helvetica, sans-serif;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-color: #ff5e57;
+    --text-color: #2a2a2a;
+    --white-color: #ffffff;
+    --header-height: 70px;
+}
+
+.wrapper {
+    overflow: hidden;
+}
+
+h1,h2,h3,h4,h5,h6 {
+    font-family: "Nunito Sans", sans-serif;
+}
+
+.global-icon {
+    font-size: 2.5rem;
+    color: var(--text-color);
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.global-icon:hover {
+    color: var(--primary-color);
+}
+
+/* Global title */
+.content-title {
+    position: relative;
+    font-size: 3rem;
+    text-align: center;
+    letter-spacing: 0.1rem;
+    color: var(--primary-color);
+}
+
+.content-desc {
+    text-align: center;
+    font-size: 2rem;
+    color: var(--text-color);
+    display: block;
+}
+
+.go-to-top {
+    position: fixed;
+    bottom: 5%;
+    right: 3%;
+    transition: 0.2s;
+    display: none;
+}
+
+.go-to-top.active {
+    display: block;
+}
+
+.go-top-btn {
+    background: var(--primary-color);
+    border: none;
+    outline: none;
+    cursor: pointer;
+    color: var(--white-color);
+    font-size: 2rem;
+    width: 50px;
+    height: 50px;
+    padding: 1rem;
+    border-radius: 50%;
+}
+
+.go-to-top:hover {
+    transform: translateY(-5%);
+}
+
+@media screen and (max-width: 768px) {
+    .content-desc {
+        font-size: 1.8rem;
+    }
+}
