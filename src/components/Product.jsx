@@ -1,7 +1,8 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
-import { Empty, Spin, Button } from 'antd'
+// import { Link } from 'react-router-dom'
+import { Empty, Spin, Modal } from 'antd'
+import ModalViewProduct from './ModalViewProduct'
 import axios from 'axios'
 
 const menuFilter = [
@@ -27,6 +28,8 @@ const Product = () => {
     const [filterPrice, setFilterPrice] = useState(0)
     const [color, setColor] = useState('')
     const [visibleVoucher, setVisibleVoucher] = useState(false)
+    const [visibleModalViewProduct, setVisibleModalViewProduct] = useState(false)
+    const [selectedProduct, setSelectedProduct] = useState(null)
 
     useEffect(() => {
         const loadProducts = async () => {
@@ -80,12 +83,25 @@ const Product = () => {
             default:
                 return productsList;
         }
-        console.log(typeFilter)
         return result;
     }
 
     function handleViewProduct(id) {
         const productItem = productsList.filter(product => product._id == id)
+        setVisibleModalViewProduct(true)
+        setSelectedProduct(...productItem)
+    }
+
+    function handleCloseModalView() {
+        setVisibleModalViewProduct(false)
+    }
+
+    function handleAddToCart(id) {
+        const customerInfor = localStorage.getItem("customer-infor")
+        if (!customerInfor) {
+            const urlToLogin = `${window.location.href.split("/product")[0]}/login`
+            window.location.href = urlToLogin
+        }
     }
 
     function renderFilterSide() {
@@ -185,14 +201,14 @@ const Product = () => {
                                     {
                                         handleFilterProduct().length > 0
                                             ? handleFilterProduct().map(product =>
-                                                <div key={product._id} className='wrapper-product' onClick={() => handleViewProduct(product._id)}>
-                                                    <img src={product.imageProduct[0]} style={{ width: '100%', height: '200px' }} />
+                                                <div key={product._id} className='wrapper-product'>
+                                                    <img src={product.imageProduct[0]} onClick={() => handleViewProduct(product._id)} style={{ width: '100%', height: '200px' }} />
                                                     <div className="product-item-id">
                                                         <p className="product-name">{product.nameProduct}</p>
                                                         <span className="product-price">Price: {product.priceProduct}</span>
                                                         <span className="product-size">Color: {capitalizeFirstLetter(product.color)}</span>
                                                     </div>
-                                                    <button className='add-to-cart' style={{ width: '100%' }}>Add to cart</button>
+                                                    <button className='add-to-cart' style={{ width: '100%' }} onClick={() => handleAddToCart(product._id)}>Add to cart</button>
                                                 </div>
                                             ) : <Empty />
                                     }
@@ -201,6 +217,12 @@ const Product = () => {
                     </div>
                 </div>
             </div>
+            {selectedProduct && <ModalViewProduct
+                selectedProduct={selectedProduct}
+                handleCloseModalView={() => handleCloseModalView()}
+                visibleModalViewProduct={visibleModalViewProduct}
+            />
+            }
         </div>
     )
 }
