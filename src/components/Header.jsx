@@ -1,4 +1,5 @@
 import React from 'react'
+import Cart from './Cart.jsx'
 import { Link } from 'react-router-dom'
 
 const Header = () => {
@@ -30,9 +31,7 @@ const Header = () => {
                         </li>
                     </ul>
                 </nav>
-                {/* {
                 <Cart />
-            } */}
             </header>
             <header className="header-mobile">
                 <div className="logo-container">
