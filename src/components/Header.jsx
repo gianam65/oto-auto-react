@@ -1,10 +1,46 @@
-import React from 'react'
+import { useState, useEffect } from 'react'
 import Cart from './Cart.jsx'
 import { AlignCenterOutlined } from '@ant-design/icons'
 
 import { Link } from 'react-router-dom'
 
+const ROUTES = [
+    {
+        link: '/',
+        title: 'Homepage'
+    },
+    {
+        link: '/product',
+        title: 'Products'
+    },
+    {
+        link: '/blog',
+        title: 'Blog Entries'
+    },
+    {
+        link: '/contact',
+        title: 'Contact Us'
+    },
+    {
+        link: '/login',
+        title: 'Login/Register'
+    },
+]
+
 const Header = () => {
+    const [activeMenu, setActiveMenu] = useState('/')
+
+    useEffect(() => {
+        if (window.performance) {
+            if (performance.navigation.type == 1) {
+                window.location = "/"
+            }
+        }
+    }, [])
+
+
+
+
     return (
         <>
             <header className='header-fixed'>
@@ -15,22 +51,17 @@ const Header = () => {
                 </div>
                 <nav className="menu">
                     <ul className="menu-list">
-                        <li className="menu-item">
-                            <Link to='/' className="menu-link active">
-                                Homepage
-                            </Link>
-                        </li>
-                        <li className="menu-item">
-                            <Link to='/product' className="menu-link">
-                                Products
-                            </Link>
-                        </li>
-                        <li className="menu-item">
-                            <Link to='/blog' className="menu-link">Blog Entries</Link>
-                        </li>
-                        <li className="menu-item">
-                            <Link to='/contact' className="menu-link">Contact Us</Link>
-                        </li>
+                        {
+                            ROUTES.map(route => {
+                                return (
+                                    <li className="menu-item" onClick={() => setActiveMenu(route.link)}>
+                                        <Link to={route.link} className={`menu-link ${activeMenu == route.link ? "active" : ""}`}>
+                                            {route.title}
+                                        </Link>
+                                    </li>
+                                )
+                            })
+                        }
                     </ul>
                 </nav>
                 <Cart />
@@ -42,32 +73,25 @@ const Header = () => {
                     </Link>
                 </div>
                 <div className="bar-btn">
-                    {/* <ion-icon className="global-icon" name="filter-outline" /> */}
                     <AlignCenterOutlined className='global-icon' />
                 </div>
             </header>
             <nav className={'menu-mobile'}>
                 <div className="close-mobile">
-                    {/* <ion-icon className="global-icon" name="close-outline" /> */}
                     <AlignCenterOutlined className='global-icon' />
                 </div>
                 <ul className="menu-mobile-list">
-                    <li className="menu-mobile-item">
-                        <Link to='/' className="menu-mobile-link active">
-                            Homepage
-                        </Link>
-                    </li>
-                    <li className="menu-mobile-item">
-                        <Link to='/product' className="menu-mobile-link">
-                            Products
-                        </Link>
-                    </li>
-                    <li className="menu-mobile-item">
-                        <Link to='/blog' className="menu-mobile-link">Blog Entries</Link>
-                    </li>
-                    <li className="menu-mobile-item">
-                        <Link to='/contact' className="menu-mobile-link">Contact Us</Link>
-                    </li>
+                    {
+                        ROUTES.map(route => {
+                            return (
+                                <li className="menu-mobile-item" onClick={() => setActiveMenu(route.link)}>
+                                    <Link to={route.link} className={`menu-mobile-link ${activeMenu == route.link ? "active" : ""}`}>
+                                        {route.title}
+                                    </Link>
+                                </li>
+                            )
+                        })
+                    }
                 </ul>
             </nav>
         </>

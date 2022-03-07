@@ -51,7 +51,7 @@ const Product = () => {
                 <ul className="filter-list">
                     {
                         menuFilter.map((item, index) => (
-                            <li key={index} className="filter-item" onClick={() => { setActiveMenu(item.panel); setTypeFilter('type') }}>
+                            <li key={index} style={{ color: item.panel === activeMenu ? "#ff5e57" : "rgba(0, 0, 0, 0.85)" }} className="filter-item" onClick={() => { setActiveMenu(item.panel); setTypeFilter('type') }}>
                                 {item.panel}
                                 <div className={`filter-item-hover ${item.panel === activeMenu ? "active" : ""}`} />
                             </li>
