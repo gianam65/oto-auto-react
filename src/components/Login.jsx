@@ -1,11 +1,14 @@
 import { useState } from 'react'
 import axios from 'axios'
+import { notification } from 'antd'
 
 const Login = () => {
     const [email, setEmail] = useState(null)
     const [userName, setUserName] = useState(null)
     const [passWord, setPassWord] = useState(null)
     const [phone, setPhone] = useState(null)
+    const [emailLogin, setEmailLogin] = useState(null)
+    const [passwordLogin, setPasswordLogin] = useState(null)
 
 
     function handleRegister(e) {
@@ -17,11 +20,42 @@ const Login = () => {
             phone
         }
         axios.post("https://oto-auto.herokuapp.com/customer", { userData }).then((res) => {
-            if (res.status == 200) {
-                localStorage.setItem('customer-infor', JSON.stringify(res.data.data))
-                refreshState()
-            }
+            // refreshState()
+            notification.open({
+                message: "Success",
+                description: "Register success"
+            })
+            console.log(res)
         }).catch(err => console.log(err))
+    }
+
+    function handleLogin(e) {
+        e.preventDefault();
+        const customerInfor = {
+            emailCustomer: emailLogin,
+            password: passwordLogin
+        }
+        axios.post("https://oto-auto.herokuapp.com/customer/login", { customerInfor }).then(res => {
+            if (res.data.isLogin) {
+                localStorage.setItem('customer-infor', JSON.stringify(res.data.Customer))
+                const urlToHome = `${window.location.href.split("/login")[0]}/`
+                window.location.href = urlToHome
+                notification.open({
+                    message: "Success",
+                    description: "Login success"
+                })
+            } else {
+                notification.open({
+                    message: "Failure to login",
+                    description: "Login failure"
+                })
+            }
+        }).catch(err => {
+            notification.open({
+                message: "Failure to login",
+                description: "Login failure"
+            })
+        })
     }
 
     function refreshState() {
@@ -47,14 +81,14 @@ const Login = () => {
                             <form action method>
                                 <div className="input-group inputBx">
                                     <span>Email</span>
-                                    <input type="text" placeholder="gianam65@xyz.com" className="inp" />
+                                    <input value={emailLogin} onChange={(e) => setEmailLogin(e.target.value)} type="text" placeholder="gianam65@xyz.com" className="inp" />
                                 </div>
                                 <div className="input-group inputBx">
                                     <span>Password</span>
-                                    <input type="password" placeholder="********" className="inp" />
+                                    <input value={passwordLogin} onChange={(e) => setPasswordLogin(e.target.value)} type="password" placeholder="********" className="inp" />
                                 </div>
                                 <div className="inputBx" style={{ marginTop: '20px' }}>
-                                    <input type="submit" defaultValue="Login" />
+                                    <input type="submit" defaultValue="Login" onClick={(e) => handleLogin(e)} />
                                 </div>
                                 <div className="inputBx" style={{ marginTop: '20px' }}>
                                     <p style={{ marginTop: '5px' }}>Don't have an account?</p>

@@ -1,5 +1,7 @@
 import React from 'react'
 import Cart from './Cart.jsx'
+import { AlignCenterOutlined } from '@ant-design/icons'
+
 import { Link } from 'react-router-dom'
 
 const Header = () => {
@@ -40,12 +42,14 @@ const Header = () => {
                     </Link>
                 </div>
                 <div className="bar-btn">
-                    <ion-icon className="global-icon" name="filter-outline" />
+                    {/* <ion-icon className="global-icon" name="filter-outline" /> */}
+                    <AlignCenterOutlined className='global-icon' />
                 </div>
             </header>
             <nav className={'menu-mobile'}>
                 <div className="close-mobile">
-                    <ion-icon className="global-icon" name="close-outline" />
+                    {/* <ion-icon className="global-icon" name="close-outline" /> */}
+                    <AlignCenterOutlined className='global-icon' />
                 </div>
                 <ul className="menu-mobile-list">
                     <li className="menu-mobile-item">

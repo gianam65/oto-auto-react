@@ -1,7 +1,6 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
-// import { Link } from 'react-router-dom'
-import { Empty, Spin, Modal } from 'antd'
+import { Empty, Spin, notification } from 'antd'
 import ModalViewProduct from './ModalViewProduct'
 import axios from 'axios'
 
@@ -97,11 +96,33 @@ const Product = () => {
     }
 
     function handleAddToCart(id) {
-        const customerInfor = localStorage.getItem("customer-infor")
+        const customerInfor = JSON.parse(localStorage.getItem("customer-infor"))
         if (!customerInfor) {
             const urlToLogin = `${window.location.href.split("/product")[0]}/login`
             window.location.href = urlToLogin
+            return
+        } else {
+            const URL = `https://oto-auto.herokuapp.com/product/addCart/${id}`
+            axios.put(URL, { idCart: customerInfor.idCart }).then(res => {
+                notification.open({
+                    message: "Success",
+                    description: "Add product success"
+                })
+                loadCart()
+            }).catch(err => {
+                console.log(err)
+            })
         }
+    }
+
+    function loadCart() {
+        const customerInfor = JSON.parse(localStorage.getItem("customer-infor"))
+        if (!customerInfor) return
+        axios.get(`https://oto-auto.herokuapp.com/cart/${customerInfor.idCart}`).then(res => {
+            localStorage.setItem("customer-cart", JSON.stringify(res.data.data.listProduct))
+        }).catch(err => {
+            console.log(err)
+        })
     }
 
     function renderFilterSide() {
