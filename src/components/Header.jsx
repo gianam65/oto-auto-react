@@ -21,10 +21,10 @@ const ROUTES = [
         link: '/contact',
         title: 'Contact Us'
     },
-    {
-        link: '/login',
-        title: 'Login/Register'
-    },
+    // {
+    //     link: '/login',
+    //     title: 'Login/Register'
+    // },
 ]
 
 const Header = () => {
@@ -32,15 +32,15 @@ const Header = () => {
 
     useEffect(() => {
         if (window.performance) {
-            if (performance.navigation.type == 1) {
+            if (performance.navigation.type === 1) {
                 window.location = "/"
             }
         }
     }, [])
 
-
-
-
+    function handleRemoveActiveMenu() {
+        setActiveMenu('/checkout')
+    }
     return (
         <>
             <header className='header-fixed'>
@@ -64,7 +64,12 @@ const Header = () => {
                         }
                     </ul>
                 </nav>
-                <Cart />
+                <div>
+                    <Cart handleRemoveActiveMenu={handleRemoveActiveMenu} />
+                    {/* <Link to='/login' className={`menu-link`}>
+                        Login
+                    </Link> */}
+                </div>
             </header>
             <header className="header-mobile">
                 <div className="logo-container">

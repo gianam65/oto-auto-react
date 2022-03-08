@@ -20,12 +20,11 @@ const Login = () => {
             phone
         }
         axios.post("https://oto-auto.herokuapp.com/customer", { userData }).then((res) => {
-            // refreshState()
+            refreshState()
             notification.open({
                 message: "Success",
                 description: "Register success"
             })
-            console.log(res)
         }).catch(err => console.log(err))
     }
 
@@ -73,9 +72,6 @@ const Login = () => {
             <div className="contentBx">
                 <div className="formBx">
                     <div className="box">
-                        <div className="logo">
-                            <img src="../../assets/img/batmanlogo.png" alt="" />
-                        </div>
                         <input type="checkbox" className="toggle-btn" name />
                         <div className="signup">
                             <form action method>
@@ -88,7 +84,7 @@ const Login = () => {
                                     <input value={passwordLogin} onChange={(e) => setPasswordLogin(e.target.value)} type="password" placeholder="********" className="inp" />
                                 </div>
                                 <div className="inputBx" style={{ marginTop: '20px' }}>
-                                    <input type="submit" defaultValue="Login" onClick={(e) => handleLogin(e)} />
+                                    <input className="btn-login" type="submit" defaultValue="Login" onClick={(e) => handleLogin(e)} />
                                 </div>
                                 <div className="inputBx" style={{ marginTop: '20px' }}>
                                     <p style={{ marginTop: '5px' }}>Don't have an account?</p>
@@ -114,7 +110,7 @@ const Login = () => {
                                     <input type="text" placeholder="0123456789" value={phone} onChange={(e) => setPhone(e.target.value)} className="inp" />
                                 </div>
                                 <div className="inputBx" style={{ marginTop: '20px' }}>
-                                    <input type="submit" defaultValue="Sign Up" onClick={(e) => handleRegister(e)} />
+                                    <input className="btn-login" type="submit" defaultValue="Sign Up" onClick={(e) => handleRegister(e)} />
                                 </div>
                                 <div className="inputBx">
                                     <p style={{ marginTop: '5px' }}>Already have an account?</p>

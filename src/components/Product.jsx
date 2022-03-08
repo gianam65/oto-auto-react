@@ -108,21 +108,15 @@ const Product = () => {
                     message: "Success",
                     description: "Add product success"
                 })
-                loadCart()
+                loadCart(res.data.data.listProduct || [])
             }).catch(err => {
                 console.log(err)
             })
         }
     }
 
-    function loadCart() {
-        const customerInfor = JSON.parse(localStorage.getItem("customer-infor"))
-        if (!customerInfor) return
-        axios.get(`https://oto-auto.herokuapp.com/cart/${customerInfor.idCart}`).then(res => {
-            localStorage.setItem("customer-cart", JSON.stringify(res.data.data.listProduct))
-        }).catch(err => {
-            console.log(err)
-        })
+    function loadCart(item) {
+        localStorage.setItem("customer-cart", JSON.stringify(item))
     }
 
     function renderFilterSide() {

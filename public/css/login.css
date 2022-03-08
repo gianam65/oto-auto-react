@@ -103,28 +103,28 @@
 .toggle-btn:before{
     font-size: 14px;
     content: 'Sign up';
-    font-weight: bolder;
-    color: white;
+    color: var(--white-color);
     position: absolute;
+    font-family: 'Poppins', sans-serif;
     top: 0;
-    Left: 0;
-    width: 50%;
-    height: 100%;
-    background: linear-gradient(225deg,#e91e63,#03a9f4);
+    left: 0;
+    width: 70%;
+    height: 101%;
     border-radius: 100px;
     display: grid;
     place-items: center;
     transition: 0.5s;
+    background: var(--text-color);
  }
  .toggle-btn:checked:before{
     content: 'Login';
-    Left: 50%;
+    left: 30%;
  }
  .toggle-btn:checked + .signup{
-    Left: -101%;
+    left: -101%;
  }
  .toggle-btn:checked + .signup + .login{
-    Left: 0%;
+    left: 0%;
  }
 
 
@@ -228,6 +228,19 @@ section .contentBx .formBx .inputBx p{
 }
 section .contentBx .formBx .inputBx p a{
     color: #ff4584;
+}
+
+.btn-login {
+    cursor: pointer;
+    transition: 0.25s all;
+}
+.btn-login:hover {
+    color: var(--white-color) !important;
+    background: var(--text-color) !important;
+}
+
+.toggle-btn {
+    cursor: pointer;
 }
 @media (max-width: 768px){
     section .imgBx{

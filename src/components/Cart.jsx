@@ -4,7 +4,7 @@ import { Empty } from 'antd'
 import { ShoppingCartOutlined, CloseOutlined } from '@ant-design/icons'
 import axios from 'axios'
 
-const Cart = () => {
+const Cart = (props) => {
     const [isDisplay, setIsDisplay] = useState(false)
     const [cart, setCart] = useState([])
 
@@ -13,6 +13,7 @@ const Cart = () => {
         if (!customerInfor) return
 
         axios.get(`https://oto-auto.herokuapp.com/cart/${customerInfor.idCart}`).then(res => {
+            console.log(res.data.data.listProduct)
             setCart(res.data.data.listProduct || [])
         }).catch(err => {
             console.log(err)
@@ -20,28 +21,26 @@ const Cart = () => {
 
     }, [])
 
-
-
-    const addActive = () => {
-        const menusEle = document.querySelector('.menu-link')
-        menusEle.classList.add('active')
-    }
-    const removeActive = () => {
-        const menusEle = document.querySelectorAll('.menu-link')
-        for (let i = 0; i < menusEle.length; ++i) {
-            menusEle[i].classList.remove('active')
-        }
-    }
     const handleCart = () => {
         setIsDisplay(!isDisplay)
     }
 
     const handleRemoveProduct = (id) => {
-        const idCart = JSON.parse(localStorage.getItem("customer-infor")).idCart
-        axios.delete(`https://oto-auto.herokuapp.com/cart/${id}`, { idCart }).then(res => {
+        const idCart = JSON.parse(localStorage.getItem("customer-infor"))
+        const listIdsItem = cart.filter(item => item._id !== id).map(item => item._id)
+        axios.put(`https://oto-auto.herokuapp.com/cart/${idCart}`, { listProduct: listIdsItem }).then(res => {
             setCart(res.data.data)
         }).catch(err => { console.log(err) })
     }
+
+    function calcTotalPrice() {
+        let totalPrice = 0
+        for (let i = 0; i < cart.length; ++i) {
+            totalPrice += cart[i].priceProduct
+        }
+        return totalPrice;
+    }
+
     return (
         <>
             <div className="menu-function">
@@ -59,7 +58,7 @@ const Cart = () => {
                             </div>
                             <ul className="cart-detail-list" style={{ minHeight: 435 }}>
                                 {
-                                    cart.length > 0
+                                    Array.isArray(cart) && cart.length > 0
                                         ?
                                         cart.map(product => {
                                             return (
@@ -84,11 +83,11 @@ const Cart = () => {
                                 }
                             </ul>
                             <div className="cart-total-price">
-                                <span className="total-price">Total: $499.99</span>
+                                <span className="total-price">Total: ${calcTotalPrice() || 0}</span>
                             </div>
                             <div className="cart-button">
-                                <Link to='/checkout' onClick={removeActive} className="btn-checkout">Checkout</Link>
-                                <Link to='/' onClick={addActive} className="btn-continue">Continue shopping</Link>
+                                <Link to={{ pathname: '/checkout', state: cart }} onClick={() => { setIsDisplay(false); props.handleRemoveActiveMenu() }} className="btn-checkout">Checkout</Link>
+                                <Link to='/' className="btn-continue">Continue shopping</Link>
                             </div>
                         </div>
                     </div>

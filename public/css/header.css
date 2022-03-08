@@ -271,7 +271,6 @@
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
-    width: 50%;
     margin-right: 2rem;
 }
 
@@ -368,4 +367,15 @@
 
 .cart-link {
     font-size: 2.2rem;
+}
+
+@media screen and (max-width: 768px) {
+    /* Responsive menu mobile */
+    .header-fixed {
+        display: none;
+    }
+
+    .header-mobile {
+        display: flex;
+    }
 }

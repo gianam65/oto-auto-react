@@ -1,0 +1,131 @@
+.footer {
+    padding: 1rem 10rem;
+    padding-top: 5%;
+    padding-bottom: 3%;
+    display: flex;
+    align-items: center;
+    margin-top: 3%;
+    border-top: 8px solid var(--primary-color);
+    background: #111111;
+    color: var(--white-color);
+}
+
+.footer-logo {
+    width: 100%;
+    text-align: left;
+    padding: 1rem;
+}
+
+.footer-about {
+    display: flex;
+    width: 30%;
+    align-items: center;
+    margin-right: 3rem;
+    flex-direction: column;
+}
+
+.footer-about span {
+    font-size: 4rem;
+    letter-spacing: 1rem;
+}
+
+.about-desc {
+    font-size: 1.6rem;
+    padding: 1rem;
+}
+
+.footer-sub {
+    width: 55%;
+}
+
+.sub-list {
+    display: flex;
+}
+
+.sub-item {
+    list-style: none;
+    width: 33%;
+    display: flex;
+    font-size: 1.4rem;
+    flex-direction: column;
+}
+
+.sub-item form {
+    margin-top: 2rem;
+    width: 100%;
+}
+
+.sub-item form input {
+    border: none;
+    outline: none;
+    padding: 1rem 2rem;
+    width: 100%;
+    font-size: 1.6rem;
+    font-family: inherit;
+}
+
+.sub-title {
+    font-family: "Nunito Sans", sans-serif;
+    font-weight: 300;
+    letter-spacing: 0.2rem;
+    color: #ffffff;
+    font-size: 1.6rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.2rem;
+    margin-bottom: 2rem;
+}
+
+.sub-desc {
+    color: #b7b7b7;
+    font-size: 1.6rem;
+    padding-top: 1.5rem;
+}
+
+.copy-right {
+    text-align: center;
+    font-size: 1.7rem;
+    background: #616161;
+    color: var(--white-color);
+    padding: 0.6rem;
+}
+
+@media screen and (max-width: 768px) {
+    .footer {
+        flex-wrap: wrap;
+        padding: unset;
+    }
+
+    .footer-logo {
+        text-align: center;
+        padding: unset;
+    }
+
+    .footer-about {
+        width: 100%;
+        text-align: center;
+        margin: 2rem auto;
+    }
+    .sub-title {
+        margin-bottom: 0.5rem;
+    }
+
+    .footer-sub {
+        width: 100%;
+    }
+
+    .sub-list {
+        width: 100%;
+        flex-wrap: wrap;
+    }
+
+    .sub-item {
+        text-align: center;
+        margin: 1.5rem auto;
+        width: 100%;
+    }
+
+    .sub-item form input {
+        width: 80%;
+    }
+}

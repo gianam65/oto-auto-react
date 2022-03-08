@@ -27,13 +27,13 @@ const ModalViewProduct = (props) => {
                         </span>
                         <p>Pinterest 90's keytar, neutra narwhal drinking vinegar gastropub hexagon intelligentsia succulents letterpress copper mug tilde. Readymade lyft kogi shabby chic hell of austin direct trade croix.</p>
                         <p>Swag fingerstache typewriter cliche, la croix everyday carry.</p>
-                        <div className="item-option">
-                            <span className="option-size">Type product:</span>
-                            <span className="size-panel">{productItem.typeProduct}</span>
-                        </div>
                         <div className='item-option'>
                             <span className="option-color">Color: </span>
                             <span className="color-panel" style={{ opacity: 0.7, background: productItem.color, boxShadow: '0rem 0rem 0.2rem rgba(0,0,0,0.85)' }}></span>
+                        </div>
+                        <div className="item-option">
+                            <span className="option-size">Type product:</span>
+                            <span className="size-panel">{productItem.typeProduct}</span>
                         </div>
                     </div>
                 </div>

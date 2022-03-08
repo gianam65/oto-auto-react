@@ -1,8 +1,242 @@
-import React from 'react'
+import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
+import { SRLWrapper } from 'simple-react-lightbox'
+import axios from 'axios'
+import { Spin } from 'antd'
+import { LeftOutlined, RightOutlined } from '@ant-design/icons'
+
+const defaultURL = "https://images.pexels.com/photos/8858750/pexels-photo-8858750.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940";
+const SLIDEDATA = [
+    {
+        background: "https://images.pexels.com/photos/4254951/pexels-photo-4254951.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+        name1: "Test1",
+        name2: "Test2",
+        desc: "test3",
+        link: "test4"
+    }
+]
+const menuHome = ['all products', 'car', 'wheels', 'steering wheel']
 
 const Home = () => {
+    const [productsList, setProductsList] = useState([])
+    const [loading, setLoading] = useState(true)
+    const [current, setCurrent] = useState(0)
+    const [activeMenu, setActiveMenu] = useState(0)
+    const length = SLIDEDATA.length
+
+    useEffect(() => {
+        const loadProducts = async () => {
+            const response = await axios("https://oto-auto.herokuapp.com/product")
+            setProductsList(response.data.data)
+            setLoading(false)
+        }
+
+        loadProducts()
+    }, [])
+
+    const handleNextSlide = () => {
+        setCurrent(current === length - 1 ? 0 : current + 1)
+    }
+
+    const handlePrevSlide = () => {
+        setCurrent(current === 0 ? length - 1 : current - 1)
+    }
+
+    const handleActiveMenu = () => {
+        const menuLink = document.querySelectorAll('.menu-link')
+        menuLink[0].classList.remove('active')
+        menuLink[1].classList.add('active')
+    }
+
     return (
-        <div>Home</div>
+        <div className="content">
+            <div className="slider-container">
+                <div className="slides">
+                    {
+                        SLIDEDATA.map((item, index) => (
+                            <div key={index} className={current === index ? 'slide-wrapp active' : 'slide-wrapp'}>
+                                {index === current && (
+                                    <div className="slider-item" style={{ backgroundImage: `url(${item.background})` }}>
+                                        <div className="slide-detail">
+                                            <span>New arrivals --</span>
+                                            <h2 className="slide-product-name">{item.name1}<span className="product-highlight">{item.nam2}</span></h2>
+                                            <p className="slide-product-desc">{item.desc}</p>
+                                            <Link to='/product' className="slide-product-link">{item.link}</Link>
+                                        </div>
+                                    </div>
+                                )
+                                }
+                            </div>
+                        ))
+                    }
+                </div>
+                <div className="slides-btn">
+                    <LeftOutlined id="prev-button" onClick={handlePrevSlide} className="btn-left" />
+                    <RightOutlined id="next-button" onClick={handleNextSlide} className="btn-right" />
+                </div>
+            </div>
+            <div className="new-content">
+                <h2 className="content-title">
+                    New arrivals
+                </h2>
+                <span className="content-desc">
+                    Here you can check our new products with fair price on fenco
+                </span>
+                <ul className="menu-products-list">
+                    {
+                        menuHome.map((item, index) => (
+                            <li onClick={() => setActiveMenu(index)} key={index} className={`menu-product-item ${activeMenu == index ? "active" : ""}`}>
+                                {item}
+                            </li>
+                        ))
+                    }
+                </ul>
+                <div className="new-products">
+                    {
+                        loading
+                            ?
+                            <Spin />
+                            :
+                            <>
+                                <SRLWrapper>
+                                    <ul className="new-product-list">
+                                        {
+                                            productsList.map((item) => (
+                                                <li key={item._id} className="new-product-item">
+                                                    <img src={item.imageProduct[0] && defaultURL} alt="" className="new-product-img" />
+                                                    <p className="new-product-name">Sneaker Splash VRT</p>
+                                                    <span className="new-product-price">$3.99</span>
+                                                </li>
+                                            ))
+                                        }
+                                    </ul>
+                                </SRLWrapper>
+                                <div className="view-all">
+                                    <Link to='/product' className="view-all-link">View all products</Link>
+                                </div>
+                            </>
+                    }
+                </div>
+            </div>
+            <div className="blog-content-wrapper">
+                <h2 className="content-title">
+                    Blog Entries
+                </h2>
+                <span className="content-desc">
+                    Here you can check out our blog entries
+                </span>
+                <ul className="blog-list">
+                    <li className="blog-item">
+                        <div className="blog-thumb">
+                            <img src="https://vsneakershop.weebly.com/uploads/6/3/3/8/63388329/maxresdefault_4_orig.jpg" alt="" className="blog-img" />
+                            <span className="blog-admin">Admin</span>
+                        </div>
+                        <div className="blog-content">
+                            <h2 className="blog-title">
+                                Team building of us
+                            </h2>
+                            <p className="blog-desc">
+                                Trade chicharrones rawing denim beard kombucha locavore and blue bottle bunch
+                            </p>
+                            <Link to='/blog' className="blog-reading">Continue reading...</Link>
+                        </div>
+                    </li>
+                    <li className="blog-item">
+                        <div className="blog-thumb">
+                            <img src="https://vsneakershop.weebly.com/uploads/6/3/3/8/63388329/ltd-leather-cage-mid-grey_1_orig.jpg" alt="" className="blog-img" />
+                            <span className="blog-admin">Admin</span>
+                        </div>
+                        <div className="blog-content">
+                            <h2 className="blog-title">
+                                Team building of us
+                            </h2>
+                            <p className="blog-desc">
+                                Trade chicharrones rawing denim beard kombucha locavore and blue bottle bunch
+                            </p>
+                            <Link to='/blog' className="blog-reading">Continue reading...</Link>
+                        </div>
+                    </li>
+                    <li className="blog-item">
+                        <div className="blog-thumb">
+                            <img src="https://vsneakershop.weebly.com/uploads/6/3/3/8/63388329/rainbow_orig.jpg" alt="" className="blog-img" />
+                            <span className="blog-admin">Admin</span>
+                        </div>
+                        <div className="blog-content">
+                            <h2 className="blog-title">
+                                Compare Ultraboost vs Nemeziz
+                            </h2>
+                            <p className="blog-desc">
+                                Trade chicharrones rawing denim beard kombucha locavore and blue bottle bunch
+                            </p>
+                            <Link to='/blog' className="blog-reading">Continue reading...</Link>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div className="features-content">
+                <h2 className="content-title">How it work</h2>
+                <span className='content-desc'>We've designed a simple, efficient tool for prototyping. Here's how it work</span>
+                <div className="features-box">
+                    <img src="https://images.pexels.com/photos/7550897/pexels-photo-7550897.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" alt="" className="features-box-img" />
+                    <span className="features-box-desc">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum, deleniti.
+                    </span>
+                </div>
+                <div className="features-box">
+                    <span className="features-box-desc">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum, deleniti.
+                    </span>
+                    <img src="https://images.pexels.com/photos/5704731/pexels-photo-5704731.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt="" className="features-box-img" />
+                </div>
+            </div>
+            <div className="delivery-content">
+                <h2 className="content-title">Delivery</h2>
+                <span className="content-desc">
+                    Delivery shipping methods
+                </span>
+                <ul className="delivery-list">
+                    <li className="delivery-item">
+                        <div className="delivery-thumb">
+                            <ion-icon name="car-outline" />
+                        </div>
+                        <div className="delivery-content">
+                            <span className="delivery-title">
+                                Free shipping
+                            </span>
+                            <p className="delivery-desc">
+                                Free, fast &amp; secure delivery within 24h
+                            </p>
+                        </div>
+                    </li>
+                    <li className="delivery-item">
+                        <div className="delivery-thumb">
+                            <ion-icon name="shield-outline" />
+                        </div>
+                        <div className="delivery-content">
+                            <span className="delivery-title">
+                                Secure Payment
+                            </span>
+                            <p className="delivery-desc">
+                                Up to 12 months open for  support tickets
+                            </p>
+                        </div>
+                    </li>
+                    <li className="delivery-item">
+                        <div className="delivery-thumb">
+                            <ion-icon name="refresh-outline" />
+                        </div>
+                        <div className="delivery-content">
+                            <span className="delivery-title">
+                                30 Days return
+                            </span>
+                            <p className="delivery-desc">
+                                30 days return for unhappy products
+                            </p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
     )
 }
 
