@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import { Empty, Spin, notification } from 'antd'
 import ModalViewProduct from './ModalViewProduct'
 import axios from 'axios'
+import DATAIMAGES from '../default-data/data.js'
 
 const menuFilter = [
     {
@@ -18,6 +19,7 @@ const menuFilter = [
         panel: 'Steering wheel',
     },
 ]
+
 const Product = () => {
     const [productsList, setProductsList] = useState([])
     const [loading, setLoading] = useState(true)
@@ -97,13 +99,16 @@ const Product = () => {
 
     function handleAddToCart(id) {
         const customerInfor = JSON.parse(localStorage.getItem("customer-infor"))
+        const itemToAdd = productsList.filter(product => product._id == id)
+        const cart = JSON.parse(localStorage.getItem("customer-cart")) || []
+        const newCart = [...cart, { amountProduct: 1, product: itemToAdd[0] }]
         if (!customerInfor) {
             const urlToLogin = `${window.location.href.split("/product")[0]}/login`
             window.location.href = urlToLogin
             return
         } else {
-            const URL = `https://oto-auto.herokuapp.com/product/addCart/${id}`
-            axios.put(URL, { idCart: customerInfor.idCart }).then(res => {
+            const URL = `https://oto-auto.herokuapp.com/product/addCart/${customerInfor.idCart}`
+            axios.put(URL, { listProduct: newCart }).then(res => {
                 notification.open({
                     message: "Success",
                     description: "Add product success"
@@ -168,15 +173,7 @@ const Product = () => {
                     <h3 className="sidebar-title">Products Categories</h3>
                     <ul className="category-list">
                         <li className="category-item">
-                            <span>Women collection</span>
-                            <p>36</p>
-                        </li>
-                        <li className="category-item">
-                            <span>Men collection</span>
-                            <p>43</p>
-                        </li>
-                        <li className="category-item">
-                            <span>Kids collection</span>
+                            <span>Cars collection</span>
                             <p>62</p>
                         </li>
                         <li className="category-item">
@@ -217,7 +214,7 @@ const Product = () => {
                                         handleFilterProduct().length > 0
                                             ? handleFilterProduct().map(product =>
                                                 <div key={product._id} className='wrapper-product'>
-                                                    <img src={product.imageProduct[0]} onClick={() => handleViewProduct(product._id)} style={{ width: '100%', height: '200px' }} />
+                                                    <img src={product.imageProduct[0] && DATAIMAGES[Math.floor(Math.random() * 14)]} onClick={() => handleViewProduct(product._id)} style={{ width: '100%', height: '200px' }} />
                                                     <div className="product-item-id">
                                                         <p className="product-name">{product.nameProduct}</p>
                                                         <span className="product-price">Price: {product.priceProduct}</span>

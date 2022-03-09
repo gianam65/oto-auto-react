@@ -88,6 +88,7 @@
     background: #616161;
     color: var(--white-color);
     padding: 0.6rem;
+    margin-bottom: 0;
 }
 
 @media screen and (max-width: 768px) {

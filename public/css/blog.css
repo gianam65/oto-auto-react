@@ -1,0 +1,150 @@
+.blog-wrapper {
+    background-image: url(https://images.pexels.com/photos/2127024/pexels-photo-2127024.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding-top: 7rem;
+}
+
+.blog-content-page {
+    padding: 3rem 10rem;
+    height: 350px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.blog-content-top {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.content-top-title {
+    text-align: center;
+    font-size: 3.5rem;
+    margin-top: 3rem;
+}
+
+.content-top-title span {
+    font-weight: 600;
+    color: var(--white-color);
+    letter-spacing: 0.2rem;
+    font-size: 6rem;
+}
+
+.content-top-link:hover {
+    background: #616161;
+}
+
+.blog-content-detail {
+    padding: 3rem 10rem;
+    width: 80%;
+    margin: 0 auto;
+}
+
+.detail-title {
+    text-align: center;
+    text-transform: capitalize;
+    font-size: 4.2rem;
+    margin: 2rem 0rem;
+}
+
+article {
+    font-size: 1.5rem;
+    line-height: 2.8rem;
+    color: #4a4a4a;
+    padding: 0.5rem;
+}
+
+.detail-main-img img {
+    width: 100%;
+    margin: 2rem auto;
+}
+
+.detail-thumb-img {
+    display: flex;
+    align-items: center;
+    margin: 2rem auto;
+}
+
+.detail-thumb-img-left {
+    width: 49%;
+    margin-right: 1%;
+}
+
+.detail-thumb-img-left img {
+    width: 100%;
+}
+
+.detail-thumb-img-right {
+    width: 49%;
+    margin-left: 1%;
+}
+
+.detail-thumb-img-right img {
+    width: 100%;
+}
+
+.blog-detail-end {
+    display: flex;
+    align-items: center;
+}
+
+.detail-end-img {
+    width: 49%;
+    margin-right: 1%;
+}
+
+.detail-end-img img {
+    width: 100%;
+}
+
+.detail-end-desc {
+    width: 49%;
+    margin-left: 1%;
+}
+
+@media screen and (max-width: 768px) {
+    .blog-content {
+        padding: 1rem;
+    }
+    .blog-wrapper {
+        padding-top: 4.5rem;
+    }
+    
+    .blog-content-page {
+        padding: 1.5rem;
+    }
+
+    .blog-content-top {
+        padding-bottom: 2rem;
+    }
+
+    .blog-content-top span {
+        font-size: 2.5rem;
+    }
+
+    .content-top-btn {
+        margin-top: 0;
+        margin-bottom: 2rem;
+    }
+
+    .blog-content-detail {
+        padding: 1rem;
+        width: 100%;
+    }
+
+    .blog-detail-end {
+        flex-direction: column;
+    }
+
+    .detail-end-img {
+        width: 100%;
+    }
+
+    .detail-end-desc {
+        width: 100%;
+    }
+}

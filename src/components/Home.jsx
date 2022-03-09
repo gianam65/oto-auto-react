@@ -4,17 +4,32 @@ import { SRLWrapper } from 'simple-react-lightbox'
 import axios from 'axios'
 import { Spin } from 'antd'
 import { LeftOutlined, RightOutlined } from '@ant-design/icons'
+import DATAIMAGES from '../default-data/data.js'
 
-const defaultURL = "https://images.pexels.com/photos/8858750/pexels-photo-8858750.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940";
 const SLIDEDATA = [
     {
-        background: "https://images.pexels.com/photos/4254951/pexels-photo-4254951.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-        name1: "Test1",
-        name2: "Test2",
-        desc: "test3",
-        link: "test4"
+        background: DATAIMAGES[Math.floor(Math.random() * 14)],
+        name: "Toyota Vios",
+        subName: "Would the best car name ?",
+        desc: "Always be 100% honest",
+        link: "Go to products"
+    },
+    {
+        background: DATAIMAGES[Math.floor(Math.random() * 14)],
+        name: "Volkswagen Germany",
+        subName: "New car arrivals",
+        desc: "Know your target market.",
+        link: "Go to products"
+    },
+    {
+        background: DATAIMAGES[Math.floor(Math.random() * 14)],
+        name: "Ford Motor United States",
+        subName: "The best car ?",
+        desc: "Make sure to mention upgrades",
+        link: "Go to products"
     }
 ]
+
 const menuHome = ['all products', 'car', 'wheels', 'steering wheel']
 
 const Home = () => {
@@ -42,10 +57,26 @@ const Home = () => {
         setCurrent(current === 0 ? length - 1 : current - 1)
     }
 
-    const handleActiveMenu = () => {
-        const menuLink = document.querySelectorAll('.menu-link')
-        menuLink[0].classList.remove('active')
-        menuLink[1].classList.add('active')
+    function handleFilterTypeProduct() {
+        let productFiltered = productsList
+        switch (activeMenu) {
+            case 0:
+                productFiltered = productsList
+                break;
+            case 1:
+                productFiltered = productsList.filter(product => product.typeProduct.toLowerCase() == "car")
+                break;
+            case 2:
+                productFiltered = productsList.filter(product => product.typeProduct.toLowerCase() == "wheel")
+                break;
+            case 3:
+                productFiltered = productsList.filter(product => product.typeProduct.toLowerCase() == "streering wheel")
+                break;
+            default:
+                return productFiltered;
+        }
+
+        return productFiltered;
     }
 
     return (
@@ -59,7 +90,7 @@ const Home = () => {
                                     <div className="slider-item" style={{ backgroundImage: `url(${item.background})` }}>
                                         <div className="slide-detail">
                                             <span>New arrivals --</span>
-                                            <h2 className="slide-product-name">{item.name1}<span className="product-highlight">{item.nam2}</span></h2>
+                                            <h2 className="slide-product-name">{item.name}<span className="product-highlight">{item.subName}</span></h2>
                                             <p className="slide-product-desc">{item.desc}</p>
                                             <Link to='/product' className="slide-product-link">{item.link}</Link>
                                         </div>
@@ -101,9 +132,9 @@ const Home = () => {
                                 <SRLWrapper>
                                     <ul className="new-product-list">
                                         {
-                                            productsList.map((item) => (
+                                            handleFilterTypeProduct().map((item) => (
                                                 <li key={item._id} className="new-product-item">
-                                                    <img src={item.imageProduct[0] && defaultURL} alt="" className="new-product-img" />
+                                                    <img src={item.imageProduct[0] && DATAIMAGES[Math.floor(Math.random() * 14)]} alt="" className="new-product-img" />
                                                     <p className="new-product-name">Sneaker Splash VRT</p>
                                                     <span className="new-product-price">$3.99</span>
                                                 </li>

@@ -1,9 +1,26 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Empty } from 'antd'
+import DATAIMAGES from '../default-data/data.js'
+import axios from 'axios'
 
 const Checkout = (props) => {
-    const currentItemInCart = props.location.state || []
+    const [currentItemInCart, setCurrentItemInCart] = useState(props.location.state || [])
+
+    const handleRemoveProduct = (id) => {
+        const idCart = JSON.parse(localStorage.getItem("customer-infor")).idCart
+        const listIdsItem = currentItemInCart.filter(item => item.product._id !== id).map(item => {
+            return {
+                product: item.product._id,
+                amountProduct: item.amountProduct
+            }
+        })
+        const params = { listProduct: listIdsItem }
+        axios.put(`https://oto-auto.herokuapp.com/cart/${idCart}`, params).then(res => {
+            localStorage.setItem("customer-cart", JSON.stringify(res.data.data.listProduct))
+            setCurrentItemInCart(res.data.data.listProduct)
+        }).catch(err => { console.log(err) })
+    }
 
     return (
         <div className="checkout-wrapper">
@@ -28,15 +45,15 @@ const Checkout = (props) => {
                         currentItemInCart.length > 0
                             ?
                             currentItemInCart.map((item) => (
-                                <div className='list-cart-inner' key={item._id}>
+                                <div className='list-cart-inner' key={item.product._id}>
                                     <div className="check-out-product-item">
                                         <div className="product-item-detail">
-                                            <img src={item.imageProduct[0]} alt="" />
-                                            <p className="check-out-product-name">{item.nameProduct}</p>
+                                            <img src={item.product.imageProduct[0] && DATAIMAGES[Math.floor(Math.random() * 14)]} alt="" />
+                                            <p className="check-out-product-name">{item.product.nameProduct}</p>
                                         </div>
-                                        <span className="check-out-product-price">${item.priceProduct}</span>
-                                        <span className="check-out-product-quantity">Amount: {item.getQuantity}</span>
-                                        <span className="check-out-product-delete">Delete</span>
+                                        <span className="check-out-product-price">${item.product.priceProduct}</span>
+                                        <span className="check-out-product-quantity">Amount: {item.product.getQuantity}</span>
+                                        <span className="check-out-product-delete" onClick={() => handleRemoveProduct(item.product._id)}>Delete</span>
                                     </div>
                                 </div>
                             ))

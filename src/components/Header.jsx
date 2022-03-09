@@ -46,11 +46,11 @@ const Header = () => {
             <header className='header-fixed'>
                 <div className="logo-container">
                     <Link to="/" className="logo-link">
-                        <span className="logo-title">fenco</span>
+                        <img style={{ width: 80, height: 60 }} src="https://scontent.fhan2-4.fna.fbcdn.net/v/t1.15752-9/274306154_331701969011884_1563692950701305637_n.png?_nc_cat=103&ccb=1-5&_nc_sid=ae9488&_nc_ohc=oCgWJE8bZ04AX9JgqWj&_nc_ht=scontent.fhan2-4.fna&oh=03_AVKOpb31-w1yXobP39FVevxnuqP-EgX9QOzUdXLnnnELVA&oe=624C9A37" alt="" />
                     </Link>
                 </div>
                 <nav className="menu">
-                    <ul className="menu-list">
+                    <ul className="menu-list" style={{ marginBottom: 0 }}>
                         {
                             ROUTES.map(route => {
                                 return (

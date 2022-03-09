@@ -14,12 +14,12 @@ const Login = () => {
     function handleRegister(e) {
         e.preventDefault()
         const userData = {
-            userName,
-            email,
-            passWord,
-            phone
+            nameCustomer: userName,
+            emailCustomer: email,
+            password: passWord,
+            phoneCustomer: phone
         }
-        axios.post("https://oto-auto.herokuapp.com/customer", { userData }).then((res) => {
+        axios.post("https://oto-auto.herokuapp.com/customer", userData).then((res) => {
             refreshState()
             notification.open({
                 message: "Success",
@@ -34,7 +34,7 @@ const Login = () => {
             emailCustomer: emailLogin,
             password: passwordLogin
         }
-        axios.post("https://oto-auto.herokuapp.com/customer/login", { customerInfor }).then(res => {
+        axios.post("https://oto-auto.herokuapp.com/customer/login", customerInfor).then(res => {
             if (res.data.isLogin) {
                 localStorage.setItem('customer-infor', JSON.stringify(res.data.Customer))
                 const urlToHome = `${window.location.href.split("/login")[0]}/`
@@ -68,6 +68,7 @@ const Login = () => {
         <section>
             <div className="imgBx">
                 <div className="background_size" id="slide_bg" />
+                <img src="https://images.pexels.com/photos/305070/pexels-photo-305070.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" />
             </div>
             <div className="contentBx">
                 <div className="formBx">
