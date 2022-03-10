@@ -159,7 +159,7 @@ const Home = () => {
                 <ul className="blog-list">
                     <li className="blog-item">
                         <div className="blog-thumb">
-                            <img src="https://vsneakershop.weebly.com/uploads/6/3/3/8/63388329/maxresdefault_4_orig.jpg" alt="" className="blog-img" />
+                            <img src={DATAIMAGES[Math.floor(Math.random() * 14)]} alt="" className="blog-img" />
                             <span className="blog-admin">Admin</span>
                         </div>
                         <div className="blog-content">
@@ -174,7 +174,7 @@ const Home = () => {
                     </li>
                     <li className="blog-item">
                         <div className="blog-thumb">
-                            <img src="https://vsneakershop.weebly.com/uploads/6/3/3/8/63388329/ltd-leather-cage-mid-grey_1_orig.jpg" alt="" className="blog-img" />
+                            <img src={DATAIMAGES[Math.floor(Math.random() * 14)]} alt="" className="blog-img" />
                             <span className="blog-admin">Admin</span>
                         </div>
                         <div className="blog-content">
@@ -189,7 +189,7 @@ const Home = () => {
                     </li>
                     <li className="blog-item">
                         <div className="blog-thumb">
-                            <img src="https://vsneakershop.weebly.com/uploads/6/3/3/8/63388329/rainbow_orig.jpg" alt="" className="blog-img" />
+                            <img src={DATAIMAGES[Math.floor(Math.random() * 14)]} alt="" className="blog-img" />
                             <span className="blog-admin">Admin</span>
                         </div>
                         <div className="blog-content">
@@ -208,7 +208,7 @@ const Home = () => {
                 <h2 className="content-title">How it work</h2>
                 <span className='content-desc'>We've designed a simple, efficient tool for prototyping. Here's how it work</span>
                 <div className="features-box">
-                    <img src="https://images.pexels.com/photos/7550897/pexels-photo-7550897.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" alt="" className="features-box-img" />
+                    <img src={DATAIMAGES[Math.floor(Math.random() * 14)]} alt="" className="features-box-img" />
                     <span className="features-box-desc">
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum, deleniti.
                     </span>
@@ -217,7 +217,7 @@ const Home = () => {
                     <span className="features-box-desc">
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum, deleniti.
                     </span>
-                    <img src="https://images.pexels.com/photos/5704731/pexels-photo-5704731.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt="" className="features-box-img" />
+                    <img src={DATAIMAGES[Math.floor(Math.random() * 14)]} alt="" className="features-box-img" />
                 </div>
             </div>
             <div className="delivery-content">

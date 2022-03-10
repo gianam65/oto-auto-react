@@ -4,7 +4,7 @@
     padding-bottom: 3%;
     display: flex;
     align-items: center;
-    margin-top: 3%;
+    /* margin-top: 3%; */
     border-top: 8px solid var(--primary-color);
     background: #111111;
     color: var(--white-color);

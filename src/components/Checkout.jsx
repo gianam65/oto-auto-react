@@ -5,10 +5,9 @@ import DATAIMAGES from '../default-data/data.js'
 import axios from 'axios'
 
 const Checkout = (props) => {
-    const [currentItemInCart, setCurrentItemInCart] = useState(props.location.state || [])
+    const currentItemInCart = props.cart
 
     const handleRemoveProduct = (id) => {
-        const idCart = JSON.parse(localStorage.getItem("customer-infor")).idCart
         const listIdsItem = currentItemInCart.filter(item => item.product._id !== id).map(item => {
             return {
                 product: item.product._id,
@@ -16,9 +15,8 @@ const Checkout = (props) => {
             }
         })
         const params = { listProduct: listIdsItem }
-        axios.put(`https://oto-auto.herokuapp.com/cart/${idCart}`, params).then(res => {
-            localStorage.setItem("customer-cart", JSON.stringify(res.data.data.listProduct))
-            setCurrentItemInCart(res.data.data.listProduct)
+        axios.put(`https://oto-auto.herokuapp.com/cart/${props.idCart}`, params).then(res => {
+            props.setNewCart(res.data.data.listProduct || [])
         }).catch(err => { console.log(err) })
     }
 
@@ -52,7 +50,7 @@ const Checkout = (props) => {
                                             <p className="check-out-product-name">{item.product.nameProduct}</p>
                                         </div>
                                         <span className="check-out-product-price">${item.product.priceProduct}</span>
-                                        <span className="check-out-product-quantity">Amount: {item.product.getQuantity}</span>
+                                        <span className="check-out-product-quantity">Amount: {item.amountProduct}</span>
                                         <span className="check-out-product-delete" onClick={() => handleRemoveProduct(item.product._id)}>Delete</span>
                                     </div>
                                 </div>

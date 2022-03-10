@@ -20,7 +20,7 @@ const menuFilter = [
     },
 ]
 
-const Product = () => {
+const Product = (props) => {
     const [productsList, setProductsList] = useState([])
     const [loading, setLoading] = useState(true)
     const [searchValue, setSearchValue] = useState('')
@@ -98,30 +98,31 @@ const Product = () => {
     }
 
     function handleAddToCart(id) {
-        const customerInfor = JSON.parse(localStorage.getItem("customer-infor"))
         const itemToAdd = productsList.filter(product => product._id == id)
-        const cart = JSON.parse(localStorage.getItem("customer-cart")) || []
-        const newCart = [...cart, { amountProduct: 1, product: itemToAdd[0] }]
-        if (!customerInfor) {
+        const isAlreadyInCart = props.cart.findIndex(item => item.product._id == id)
+        let newCart = []
+        if (isAlreadyInCart >= 0) {
+            props.cart[isAlreadyInCart].amountProduct += 1
+        } else {
+            newCart = [...props.cart, { amountProduct: 1, product: itemToAdd[0] }]
+        }
+        if (!props.idCart) {
             const urlToLogin = `${window.location.href.split("/product")[0]}/login`
             window.location.href = urlToLogin
             return
         } else {
-            const URL = `https://oto-auto.herokuapp.com/product/addCart/${customerInfor.idCart}`
+            const URL = `https://oto-auto.herokuapp.com/product/addCart/${props.idCart}`
             axios.put(URL, { listProduct: newCart }).then(res => {
-                notification.open({
+                notification.success({
                     message: "Success",
-                    description: "Add product success"
+                    description: "Add product success",
+                    placement: "top"
                 })
-                loadCart(res.data.data.listProduct || [])
+                props.setNewCart(res.data.data.listProduct || [])
             }).catch(err => {
                 console.log(err)
             })
         }
-    }
-
-    function loadCart(item) {
-        localStorage.setItem("customer-cart", JSON.stringify(item))
     }
 
     function renderFilterSide() {

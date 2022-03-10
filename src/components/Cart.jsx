@@ -7,31 +7,28 @@ import axios from 'axios'
 
 const Cart = (props) => {
     const [isDisplay, setIsDisplay] = useState(false)
-    const [cart, setCart] = useState(JSON.parse(localStorage.getItem("customer-cart")) || [])
-
+    const cart = { props }
     const handleCart = () => {
         setIsDisplay(!isDisplay)
     }
 
     const handleRemoveProduct = (id) => {
-        const idCart = JSON.parse(localStorage.getItem("customer-infor")).idCart
-        const listIdsItem = cart.filter(item => item.product._id !== id).map(item => {
+        const listIdsItem = props.cart.filter(item => item.product._id !== id).map(item => {
             return {
                 product: item.product._id,
                 amountProduct: item.amountProduct
             }
         })
         const params = { listProduct: listIdsItem }
-        axios.put(`https://oto-auto.herokuapp.com/cart/${idCart}`, params).then(res => {
-            localStorage.setItem("customer-cart", JSON.stringify(res.data.data.listProduct))
-            setCart(res.data.data.listProduct)
+        axios.put(`https://oto-auto.herokuapp.com/cart/${props.idCart}`, params).then(res => {
+            props.setNewCart(res.data.data.listProduct)
         }).catch(err => { console.log(err) })
     }
 
     function calcTotalPrice() {
         let totalPrice = 0
-        for (let i = 0; i < cart.length; ++i) {
-            totalPrice += cart[i].priceProduct
+        for (let i = 0; i < props.cart.length; ++i) {
+            totalPrice += props.cart[i].product.priceProduct * props.cart[i].amountProduct
         }
         return totalPrice;
     }
@@ -53,9 +50,9 @@ const Cart = (props) => {
                             </div>
                             <ul className="cart-detail-list" style={{ minHeight: 435 }}>
                                 {
-                                    Array.isArray(cart) && cart.length > 0
+                                    Array.isArray(props.cart) && props.cart.length > 0
                                         ?
-                                        cart.map(item => {
+                                        props.cart.map(item => {
                                             return (
                                                 <li className="cart-detail-item">
                                                     <img src={item.product.imageProduct[0] && DATAIMAGES[Math.floor(Math.random() * 14)]} className="cart-detail-thumb" style={{ width: 100, height: 100 }} />
@@ -78,15 +75,15 @@ const Cart = (props) => {
                                 }
                             </ul>
                             <div className="cart-total-price">
-                                {cart.length > 0 && <span className="total-price">Total: ${calcTotalPrice() || 0}</span>}
+                                {props.cart.length > 0 && <span className="total-price">Total: ${calcTotalPrice() || 0}</span>}
                             </div>
                             <div className="cart-button">
-                                <Link to={{ pathname: '/checkout', state: cart }} onClick={() => { setIsDisplay(false); props.handleRemoveActiveMenu() }} className="btn-checkout">Checkout</Link>
-                                <Link to='/' className="btn-continue">Continue shopping</Link>
+                                <Link to='/checkout' onClick={() => { setIsDisplay(false); props.handleRemoveActiveMenu() }} className="btn-checkout">Checkout</Link>
+                                <Link to='/product' onClick={() => { setIsDisplay(false); props.handleActiveCurrentMenu() }} className="btn-continue">Continue shopping</Link>
                             </div>
                         </div>
                     </div>
-                    <div className="cart-amount">{cart.length}</div>
+                    <div className="cart-amount">{props.cart.length}</div>
                 </div>
             </div>
         </>

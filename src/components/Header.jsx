@@ -27,13 +27,13 @@ const ROUTES = [
     // },
 ]
 
-const Header = () => {
+const Header = (props) => {
     const [activeMenu, setActiveMenu] = useState('/')
 
     useEffect(() => {
         if (window.performance) {
             if (performance.navigation.type === 1) {
-                window.location = "/"
+                setActiveMenu(window.location.pathname)
             }
         }
     }, [])
@@ -41,6 +41,11 @@ const Header = () => {
     function handleRemoveActiveMenu() {
         setActiveMenu('/checkout')
     }
+
+    function handleActiveCurrentMenu() {
+        setActiveMenu('/product')
+    }
+
     return (
         <>
             <header className='header-fixed'>
@@ -54,7 +59,7 @@ const Header = () => {
                         {
                             ROUTES.map(route => {
                                 return (
-                                    <li className="menu-item" onClick={() => setActiveMenu(route.link)}>
+                                    <li className="menu-item" key={route.link} onClick={() => setActiveMenu(route.link)}>
                                         <Link to={route.link} className={`menu-link ${activeMenu == route.link ? "active" : ""}`}>
                                             {route.title}
                                         </Link>
@@ -65,7 +70,7 @@ const Header = () => {
                     </ul>
                 </nav>
                 <div>
-                    <Cart handleRemoveActiveMenu={handleRemoveActiveMenu} />
+                    <Cart handleActiveCurrentMenu={handleActiveCurrentMenu} handleRemoveActiveMenu={handleRemoveActiveMenu} idCart={props.idCart} cart={props.cart} setNewCart={props.setNewCart} />
                     {/* <Link to='/login' className={`menu-link`}>
                         Login
                     </Link> */}
@@ -87,9 +92,9 @@ const Header = () => {
                 </div>
                 <ul className="menu-mobile-list">
                     {
-                        ROUTES.map(route => {
+                        ROUTES.map((route, index) => {
                             return (
-                                <li className="menu-mobile-item" onClick={() => setActiveMenu(route.link)}>
+                                <li key={index} className="menu-mobile-item" onClick={() => setActiveMenu(route.link)}>
                                     <Link to={route.link} className={`menu-mobile-link ${activeMenu == route.link ? "active" : ""}`}>
                                         {route.title}
                                     </Link>

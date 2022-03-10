@@ -39,18 +39,18 @@ const Login = () => {
                 localStorage.setItem('customer-infor', JSON.stringify(res.data.Customer))
                 const urlToHome = `${window.location.href.split("/login")[0]}/`
                 window.location.href = urlToHome
-                notification.open({
+                notification.success({
                     message: "Success",
                     description: "Login success"
                 })
             } else {
-                notification.open({
+                notification.error({
                     message: "Failure to login",
                     description: "Login failure"
                 })
             }
         }).catch(err => {
-            notification.open({
+            notification.error({
                 message: "Failure to login",
                 description: "Login failure"
             })
