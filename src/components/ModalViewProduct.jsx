@@ -1,5 +1,6 @@
 import React from 'react'
 import { Modal } from 'antd'
+import DATAIMAGES from '../default-data/data.js'
 
 const ModalViewProduct = (props) => {
     const productItem = props.selectedProduct
@@ -15,7 +16,7 @@ const ModalViewProduct = (props) => {
             <div className='product-detail-wrapper'>
                 <div className="product-detail">
                     <div className="product-detail-img">
-                        <img src={productItem && productItem.imageProduct[0]} alt="" />
+                        <img src={productItem && productItem.imageProduct[0] && DATAIMAGES[Math.floor(Math.random() * 14)]} alt="" />
                     </div>
                     <div className="product-detail-desc">
                         <span className="product-detail-name">

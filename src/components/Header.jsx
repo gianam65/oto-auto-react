@@ -20,10 +20,6 @@ const ROUTES = [
         link: '/contact',
         title: 'Contact Us'
     },
-    // {
-    //     link: '/login',
-    //     title: 'Login/Register'
-    // },
 ]
 
 const Header = (props) => {

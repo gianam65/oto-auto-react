@@ -3,10 +3,12 @@ import { Link } from 'react-router-dom'
 import { Empty } from 'antd'
 import DATAIMAGES from '../default-data/data.js'
 import { CheckOutlined } from '@ant-design/icons'
+import ModalReviewProduct from './ModalReviewProduct'
 
 const Checkout = (props) => {
-    const [payment, setPayment] = useState(false)
+    const [openReview, setOpenReview] = useState(false)
     const currentItemInCart = props.cart
+    const [lastItemInCart, setLastItemInCart] = useState({})
 
     const handleRemoveProduct = (id) => {
         const listIdsItem = currentItemInCart.filter(item => item.product._id !== id).map(item => {
@@ -22,7 +24,13 @@ const Checkout = (props) => {
     const handlePayment = () => {
         const params = { listProduct: [] }
         props.setNewCart(params)
-        setPayment(true)
+        setOpenReview(true)
+    }
+
+    function getLastItemInCart() {
+        const lastItem = props.cart && props.cart[props.cart.length - 1] || {}
+        setLastItemInCart(lastItem)
+        return lastItem
     }
 
     function calcTotalPrice() {
@@ -32,6 +40,10 @@ const Checkout = (props) => {
         }
 
         return totalPrice || 0
+    }
+
+    function handleCloseReview() {
+        setOpenReview(false)
     }
 
     return (
@@ -81,7 +93,7 @@ const Checkout = (props) => {
                     }</p>
                     {
                         props.cart.length > 0 && (
-                            <button onClick={handlePayment} className="check-out-btn">Payment</button>
+                            <button onClick={() => { handlePayment(); getLastItemInCart() }} className="check-out-btn">Payment</button>
                         )
                     }
                     {
@@ -92,7 +104,7 @@ const Checkout = (props) => {
                 </div>
             </div>
 
-            <div onClick={() => setPayment(false)} className={`check-out-overlay ${payment ? "active" : ""}`}>
+            {/* <div onClick={() => setPayment(false)} className={`check-out-overlay ${payment ? "active" : ""}`}>
                 <div className="check-out-modal">
                     <span className="modal-success">Payment success</span>
                     <div className="success-icon">
@@ -100,7 +112,16 @@ const Checkout = (props) => {
                     </div>
                     <p className="notice">Click outside the modal to continue shopping</p>
                 </div>
-            </div>
+            </div> */}
+
+            {
+                Object.keys(lastItemInCart).length > 0 && <ModalReviewProduct
+                    lastItemInCart={lastItemInCart}
+                    openReview={openReview}
+                    handleCloseReview={handleCloseReview}
+                    customerInfor={props.customerInfor}
+                />
+            }
         </div>
     )
 }

@@ -47,7 +47,7 @@ function App() {
           </Route>
           <Route exact path="/login" component={Login} />
           <Route exact path="/checkout" >
-            <Checkout idCart={idCart} cart={cart} setNewCart={(value) => setNewCart(value)} />
+            <Checkout idCart={idCart} customerInfor={customerInfor} cart={cart} setNewCart={(value) => setNewCart(value)} />
           </Route>
           <Route exact path="/blog" component={Blog} />
           <Route exact path="/contact" component={Contact} />
