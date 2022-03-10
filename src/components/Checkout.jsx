@@ -2,9 +2,10 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Empty } from 'antd'
 import DATAIMAGES from '../default-data/data.js'
-import axios from 'axios'
+import { CheckOutlined } from '@ant-design/icons'
 
 const Checkout = (props) => {
+    const [payment, setPayment] = useState(false)
     const currentItemInCart = props.cart
 
     const handleRemoveProduct = (id) => {
@@ -15,9 +16,22 @@ const Checkout = (props) => {
             }
         })
         const params = { listProduct: listIdsItem }
-        axios.put(`https://oto-auto.herokuapp.com/cart/${props.idCart}`, params).then(res => {
-            props.setNewCart(res.data.data.listProduct || [])
-        }).catch(err => { console.log(err) })
+        props.setNewCart(params)
+    }
+
+    const handlePayment = () => {
+        const params = { listProduct: [] }
+        props.setNewCart(params)
+        setPayment(true)
+    }
+
+    function calcTotalPrice() {
+        let totalPrice = 0;
+        for (let i = 0; i < props.cart.length; ++i) {
+            totalPrice += props.cart[i].product.priceProduct * props.cart[i].amountProduct
+        }
+
+        return totalPrice || 0
     }
 
     return (
@@ -33,7 +47,7 @@ const Checkout = (props) => {
             </div>
             <div className="check-out-product">
                 <div className="check-out-product-top">
-                    <p className="product-inner-name">Product</p>
+                    <p className="product-inner-name" style={{ marginBottom: 0 }}>Product</p>
                     <span className="product-price">Price</span>
                     <span className="product-quantity">Quantity</span>
                     <span className="product-delete">Remove</span>
@@ -47,7 +61,7 @@ const Checkout = (props) => {
                                     <div className="check-out-product-item">
                                         <div className="product-item-detail">
                                             <img src={item.product.imageProduct[0] && DATAIMAGES[Math.floor(Math.random() * 14)]} alt="" />
-                                            <p className="check-out-product-name">{item.product.nameProduct}</p>
+                                            <p className="check-out-product-name" style={{ marginBottom: 0, fontWeight: 600 }}>{item.product.nameProduct}</p>
                                         </div>
                                         <span className="check-out-product-price">${item.product.priceProduct}</span>
                                         <span className="check-out-product-quantity">Amount: {item.amountProduct}</span>
@@ -62,27 +76,27 @@ const Checkout = (props) => {
             </div>
             <div className="check-out-footer">
                 <div className="check-out-product-total">
-                    {/* <p className="check-out-total">{
-                        isDelete ? 'Total price: $0' : `Total price: ${total}`
+                    <p className="check-out-total" style={{ margin: 0, marginRight: 22 }}>{
+                        props.cart.length == 0 ? 'Total price: $0' : `Total price: $${calcTotalPrice()}`
                     }</p>
                     {
-                        isDelete || (
-                            <button onClick={toggleModal} className="check-out-btn">Payment</button>
+                        props.cart.length > 0 && (
+                            <button onClick={handlePayment} className="check-out-btn">Payment</button>
                         )
                     }
                     {
-                        isDelete && (
+                        props.cart.length == 0 && (
                             <Link to='/product' className="check-out-btn">Continue shopping...</Link>
                         )
-                    } */}
+                    }
                 </div>
             </div>
 
-            <div className="check-out-overlay">
+            <div onClick={() => setPayment(false)} className={`check-out-overlay ${payment ? "active" : ""}`}>
                 <div className="check-out-modal">
                     <span className="modal-success">Payment success</span>
                     <div className="success-icon">
-                        <ion-icon name="checkmark-outline"></ion-icon>
+                        <CheckOutlined />
                     </div>
                     <p className="notice">Click outside the modal to continue shopping</p>
                 </div>

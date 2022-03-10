@@ -20,9 +20,7 @@ const Cart = (props) => {
             }
         })
         const params = { listProduct: listIdsItem }
-        axios.put(`https://oto-auto.herokuapp.com/cart/${props.idCart}`, params).then(res => {
-            props.setNewCart(res.data.data.listProduct)
-        }).catch(err => { console.log(err) })
+        props.setNewCart(params)
     }
 
     function calcTotalPrice() {

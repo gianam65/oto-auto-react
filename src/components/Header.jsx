@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import Cart from './Cart.jsx'
 import { AlignCenterOutlined } from '@ant-design/icons'
-
 import { Link } from 'react-router-dom'
 
 const ROUTES = [
@@ -69,11 +68,11 @@ const Header = (props) => {
                         }
                     </ul>
                 </nav>
-                <div>
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                    {props.customerInfor ? <span style={{ fontWeight: 600 }}>{props.customerInfor.nameCustomer}</span> : <Link to='/login' className={`menu-link`} style={{ paddingRight: 0 }}>
+                        Login/Register
+                    </Link>}
                     <Cart handleActiveCurrentMenu={handleActiveCurrentMenu} handleRemoveActiveMenu={handleRemoveActiveMenu} idCart={props.idCart} cart={props.cart} setNewCart={props.setNewCart} />
-                    {/* <Link to='/login' className={`menu-link`}>
-                        Login
-                    </Link> */}
                 </div>
             </header>
             <header className="header-mobile">

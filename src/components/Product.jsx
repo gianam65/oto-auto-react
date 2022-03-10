@@ -98,30 +98,25 @@ const Product = (props) => {
     }
 
     function handleAddToCart(id) {
-        const itemToAdd = productsList.filter(product => product._id == id)
-        const isAlreadyInCart = props.cart.findIndex(item => item.product._id == id)
-        let newCart = []
-        if (isAlreadyInCart >= 0) {
-            props.cart[isAlreadyInCart].amountProduct += 1
-        } else {
-            newCart = [...props.cart, { amountProduct: 1, product: itemToAdd[0] }]
-        }
         if (!props.idCart) {
             const urlToLogin = `${window.location.href.split("/product")[0]}/login`
             window.location.href = urlToLogin
             return
         } else {
-            const URL = `https://oto-auto.herokuapp.com/product/addCart/${props.idCart}`
-            axios.put(URL, { listProduct: newCart }).then(res => {
-                notification.success({
-                    message: "Success",
-                    description: "Add product success",
-                    placement: "top"
+            const itemToAdd = productsList.filter(product => product._id == id)
+            const isAlreadyInCart = props.cart.find(item => item.product._id == id)
+            if (isAlreadyInCart) {
+                notification.error({
+                    message: "Product is already in cart",
+                    description: "Add product failure",
+                    placement: "bottomRight"
                 })
-                props.setNewCart(res.data.data.listProduct || [])
-            }).catch(err => {
-                console.log(err)
-            })
+                return
+            } else {
+                const newCart = [...props.cart, { amountProduct: 1, product: itemToAdd[0] }]
+                const params = { listProduct: newCart }
+                props.setNewCart(params)
+            }
         }
     }
 

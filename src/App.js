@@ -17,7 +17,8 @@ const GlobalState = React.createContext();
 
 function App() {
   const [cart, setCart] = useState([])
-  const idCart = JSON.parse(localStorage.getItem("customer-infor")) && JSON.parse(localStorage.getItem("customer-infor")).idCart
+  const customerInfor = JSON.parse(localStorage.getItem("customer-infor"))
+  const idCart = customerInfor && customerInfor.idCart
 
   useEffect(() => {
     if (idCart) {
@@ -37,7 +38,7 @@ function App() {
   return (
     <div className="wrapper">
       <GlobalState.Provider>
-        <Header idCart={idCart} cart={cart} setNewCart={(value) => setNewCart(value)} />
+        <Header idCart={idCart} customerInfor={customerInfor} cart={cart} setNewCart={(value) => setNewCart(value)} />
         <ScrollTop />
         <Switch>
           <Route exact path="/home" component={Home} />
