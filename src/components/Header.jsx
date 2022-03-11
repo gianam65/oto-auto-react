@@ -24,6 +24,7 @@ const ROUTES = [
 
 const Header = (props) => {
     const [activeMenu, setActiveMenu] = useState('/')
+    const [openMobile, setOpenMobile] = useState(false)
 
     useEffect(() => {
         if (window.performance) {
@@ -74,22 +75,22 @@ const Header = (props) => {
             <header className="header-mobile">
                 <div className="logo-container">
                     <Link to='/' className="logo-link">
-                        <span className="logo-title">fenco</span>
+                        <img style={{ width: 80, height: 60 }} src="https://scontent.fhan2-4.fna.fbcdn.net/v/t1.15752-9/274306154_331701969011884_1563692950701305637_n.png?_nc_cat=103&ccb=1-5&_nc_sid=ae9488&_nc_ohc=oCgWJE8bZ04AX9JgqWj&_nc_ht=scontent.fhan2-4.fna&oh=03_AVKOpb31-w1yXobP39FVevxnuqP-EgX9QOzUdXLnnnELVA&oe=624C9A37" alt="" />
                     </Link>
                 </div>
-                <div className="bar-btn">
+                <div className="bar-btn" onClick={() => setOpenMobile(true)}>
                     <AlignCenterOutlined className='global-icon' />
                 </div>
             </header>
-            <nav className={'menu-mobile'}>
-                <div className="close-mobile">
+            <nav className={`menu-mobile ${openMobile ? "active" : ""}`}>
+                <div className="close-mobile" onClick={() => setOpenMobile(false)}>
                     <AlignCenterOutlined className='global-icon' />
                 </div>
                 <ul className="menu-mobile-list">
                     {
                         ROUTES.map((route, index) => {
                             return (
-                                <li key={index} className="menu-mobile-item" onClick={() => setActiveMenu(route.link)}>
+                                <li key={index} className="menu-mobile-item" onClick={() => { setActiveMenu(route.link); setOpenMobile(false) }}>
                                     <Link to={route.link} className={`menu-mobile-link ${activeMenu == route.link ? "active" : ""}`}>
                                         {route.title}
                                     </Link>

@@ -1,7 +1,9 @@
 import React from 'react'
-import { Modal } from 'antd'
+import { Modal, notification } from 'antd'
 import { useState } from 'react'
 import axios from 'axios'
+
+const BACKUPURL = "https://images.pexels.com/photos/1545743/pexels-photo-1545743.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
 
 const ModalReviewProduct = (props) => {
     const [review, setReview] = useState("")
@@ -11,6 +13,18 @@ const ModalReviewProduct = (props) => {
         const body = {
             review: review,
             idCustomer: props.customerInfor && props.customerInfor._id
+        }
+
+        if (review.length == 0) {
+            notification.error({
+                title: "Error",
+                description: "You have to enter some text to review",
+                placement: 'bottomRight',
+                bottom: 50,
+                duration: 3,
+                rtl: true,
+            });
+            return
         }
 
         axios.put(url, body).then(res => { }).catch(err => {
@@ -25,11 +39,13 @@ const ModalReviewProduct = (props) => {
             <>
                 <div className="review-wrapper">
                     <div className="review-left">
-                        <img src={lastItemIncart.product.imageProduct[0] || ""} alt="" className="review-img" />
+                        <img src={lastItemIncart.product.imageProduct[0] && BACKUPURL} alt="car" className="review-img" />
                     </div>
                     <div className="review-right">
                         <span className="product-name">Name: {lastItemIncart.product.nameProduct}</span>
                         <span className="product-price">Price: {lastItemIncart.product.priceProduct}</span>
+                        <span className="product-price">Auto company: {lastItemIncart.product.autoCompany}</span>
+                        <span className="product-price">Type product: {lastItemIncart.product.typeProduct}</span>
                         <div className="color-wrapper">
                             <span className="product-price">Color: </span>
                             <span className="product-color" style={{ background: lastItemIncart.product.color }}></span>
@@ -43,7 +59,7 @@ const ModalReviewProduct = (props) => {
                         lastItemIncart.product.reviewsCustomer.length > 0
                             ?
                             lastItemIncart.product.reviewsCustomer.map(item => {
-                                return <p style={{ fontStyle: "italic" }}>{item.nameCustomer}: {item.review}</p>
+                                return <p style={{ fontStyle: "italic" }}><span style={{ fontWeight: 700 }}>{item.nameCustomer}:</span> {item.review}</p>
                             })
                             :
                             <p style={{ fontStyle: "italic" }}>This product has no reviews yet</p>
@@ -61,6 +77,7 @@ const ModalReviewProduct = (props) => {
     return (
         <Modal
             title="Review products"
+            width={900}
             visible={props.openReview}
             onCancel={props.handleCloseReview}
             onOk={() => handleReviewProduct()}

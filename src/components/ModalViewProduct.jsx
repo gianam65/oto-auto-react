@@ -2,6 +2,7 @@ import React from 'react'
 import { Modal } from 'antd'
 import DATAIMAGES from '../default-data/data.js'
 
+const BACKUPURL = "https://images.pexels.com/photos/1545743/pexels-photo-1545743.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
 const ModalViewProduct = (props) => {
     const productItem = props.selectedProduct
     const visibleModalViewProduct = props.visibleModalViewProduct
@@ -16,7 +17,7 @@ const ModalViewProduct = (props) => {
             <div className='product-detail-wrapper'>
                 <div className="product-detail">
                     <div className="product-detail-img">
-                        <img src={productItem && productItem.imageProduct[0] && DATAIMAGES[Math.floor(Math.random() * 14)]} alt="" />
+                        <img src={productItem && productItem.imageProduct[0] && BACKUPURL} alt="" />
                     </div>
                     <div className="product-detail-desc">
                         <span className="product-detail-name">

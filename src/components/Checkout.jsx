@@ -45,6 +45,7 @@ const Checkout = (props) => {
     function handleCloseReview() {
         setOpenReview(false)
     }
+    console.log(props)
 
     return (
         <div className="checkout-wrapper">
@@ -103,16 +104,6 @@ const Checkout = (props) => {
                     }
                 </div>
             </div>
-
-            {/* <div onClick={() => setPayment(false)} className={`check-out-overlay ${payment ? "active" : ""}`}>
-                <div className="check-out-modal">
-                    <span className="modal-success">Payment success</span>
-                    <div className="success-icon">
-                        <CheckOutlined />
-                    </div>
-                    <p className="notice">Click outside the modal to continue shopping</p>
-                </div>
-            </div> */}
 
             {
                 Object.keys(lastItemInCart).length > 0 && <ModalReviewProduct

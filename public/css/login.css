@@ -127,13 +127,33 @@
     left: 0%;
  }
 
+ .inputBx .ant-btn {
+    font-size: 16px;
+    border-radius: 29px;
+    border: 1px solid #607d8b;
+    transition: 0.25s all;
+ }
 
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
+ .not-have-acc {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+ }
+
+ .register-here {
+    font-size: 16px;
+    color: var(--primary-color);
+    font-weight: 600;
+ }
+
+ .inputBx .ant-btn:hover > span {
+    color: #fff !important;
+ }
+
+.inputBx .ant-btn span {
+    margin-top: 0 !important;
 }
+
 section{
     position: relative;
     width: 100%;

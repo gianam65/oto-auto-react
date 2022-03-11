@@ -104,16 +104,11 @@ const Product = (props) => {
             return
         } else {
             const itemToAdd = productsList.filter(product => product._id == id)
-            const isAlreadyInCart = props.cart.find(item => item.product._id == id)
-            if (isAlreadyInCart) {
-                notification.error({
-                    message: "Product is already in cart",
-                    description: "Add product failure",
-                    placement: "bottomRight"
-                })
-                return
+            const isAlreadyInCart = props.cart.findIndex(item => item.product._id == id)
+            const newCart = [...props.cart, { amountProduct: 1, product: itemToAdd[0] }]
+            if (isAlreadyInCart >= 0) {
+                props.cart[isAlreadyInCart].amountProduct += 1
             } else {
-                const newCart = [...props.cart, { amountProduct: 1, product: itemToAdd[0] }]
                 const params = { listProduct: newCart }
                 props.setNewCart(params)
             }

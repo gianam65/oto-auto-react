@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import axios from 'axios'
-import { notification } from 'antd'
+import { notification, Button } from 'antd'
 
 const Login = () => {
     const [email, setEmail] = useState(null)
@@ -9,6 +9,7 @@ const Login = () => {
     const [phone, setPhone] = useState(null)
     const [emailLogin, setEmailLogin] = useState(null)
     const [passwordLogin, setPasswordLogin] = useState(null)
+    const [isChecked, setIsChecked] = useState(false)
 
 
     function handleRegister(e) {
@@ -23,8 +24,10 @@ const Login = () => {
             refreshState()
             notification.open({
                 message: "Success",
-                description: "Register success"
+                description: "Register success",
+                duration: 3,
             })
+            setIsChecked(false)
         }).catch(err => console.log(err))
     }
 
@@ -41,18 +44,21 @@ const Login = () => {
                 window.location.href = urlToHome
                 notification.success({
                     message: "Success",
-                    description: "Login success"
+                    description: "Login success",
+                    duration: 3,
                 })
             } else {
                 notification.error({
                     message: "Failure to login",
-                    description: "Login failure"
+                    description: "Login failure",
+                    duration: 3,
                 })
             }
         }).catch(err => {
             notification.error({
                 message: "Failure to login",
-                description: "Login failure"
+                description: "Login failure",
+                duration: 3,
             })
         })
     }
@@ -73,7 +79,7 @@ const Login = () => {
             <div className="contentBx">
                 <div className="formBx">
                     <div className="box">
-                        <input type="checkbox" className="toggle-btn" name />
+                        <input type="checkbox" className="toggle-btn" onChange={() => setIsChecked(!isChecked)} checked={isChecked} name />
                         <div className="signup">
                             <form action method>
                                 <div className="input-group inputBx">
@@ -85,10 +91,27 @@ const Login = () => {
                                     <input value={passwordLogin} onChange={(e) => setPasswordLogin(e.target.value)} type="password" placeholder="********" className="inp" />
                                 </div>
                                 <div className="inputBx" style={{ marginTop: '20px' }}>
-                                    <input className="btn-login" type="submit" defaultValue="Login" onClick={(e) => handleLogin(e)} />
+                                    <Button
+                                        onClick={(e) => handleLogin(e)}
+                                        className="btn-login"
+                                        style={{
+                                            width: '100%',
+                                            padding: '13px 20px',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            height: '100%',
+                                            letterSpacing: '1px'
+                                        }}
+                                        disabled={emailLogin == null || passwordLogin == null}
+                                    >Login</Button>
                                 </div>
-                                <div className="inputBx" style={{ marginTop: '20px' }}>
-                                    <p style={{ marginTop: '5px' }}>Don't have an account?</p>
+                                <div className="inputBx not-have-acc" style={{ marginTop: '20px' }}>
+                                    <p style={{ marginTop: '5px', marginBottom: 0, marginRight: 10 }}>Don't have an account?</p>
+                                    <span className="register-here" onClick={() => setIsChecked(true)}
+                                        style={{ marginTop: 0, color: "#ff5e57", cursor: "pointer", fontWeight: 600, fontSize: 16 }}>
+                                        Register
+                                    </span>
                                 </div>
                             </form>
                         </div>
@@ -111,10 +134,27 @@ const Login = () => {
                                     <input type="text" placeholder="0123456789" value={phone} onChange={(e) => setPhone(e.target.value)} className="inp" />
                                 </div>
                                 <div className="inputBx" style={{ marginTop: '20px' }}>
-                                    <input className="btn-login" type="submit" defaultValue="Sign Up" onClick={(e) => handleRegister(e)} />
+                                    <Button
+                                        onClick={(e) => handleRegister(e)}
+                                        className="btn-login"
+                                        style={{
+                                            width: '100%',
+                                            padding: '13px 20px',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            height: '100%',
+                                            letterSpacing: '1px'
+                                        }}
+                                        disabled={userName == null || email == null || passWord == null || phone == null}
+                                    >Sign Up</Button>
                                 </div>
-                                <div className="inputBx">
-                                    <p style={{ marginTop: '5px' }}>Already have an account?</p>
+                                <div className="inputBx not-have-acc">
+                                    <p style={{ marginTop: '5px', marginBottom: 0, marginRight: 12 }}>Already have an account?</p>
+                                    <span className="register-here" onClick={() => setIsChecked(false)}
+                                        style={{ marginTop: 0, color: "#ff5e57", cursor: "pointer", fontWeight: 600, fontSize: 16 }}>
+                                        Login
+                                    </span>
                                 </div>
                             </form>
                         </div>

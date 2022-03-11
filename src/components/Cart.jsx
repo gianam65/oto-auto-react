@@ -1,9 +1,8 @@
 import { Link } from 'react-router-dom'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { Empty } from 'antd'
 import { ShoppingCartOutlined, CloseOutlined } from '@ant-design/icons'
 import DATAIMAGES from '../default-data/data.js'
-import axios from 'axios'
 
 const Cart = (props) => {
     const [isDisplay, setIsDisplay] = useState(false)
@@ -62,7 +61,7 @@ const Cart = (props) => {
                                                             </div>
                                                         </div>
                                                         <div className="cart-desc-price">
-                                                            <span className="cart-detail-quantity">Quantity: 1</span>
+                                                            <span className="cart-detail-quantity">Quantity: {item.amountProduct}</span>
                                                             <span className="cart-detail-total">${item.product.priceProduct}</span>
                                                         </div>
                                                     </div>
