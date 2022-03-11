@@ -108,6 +108,9 @@ const Product = (props) => {
             const newCart = [...props.cart, { amountProduct: 1, product: itemToAdd[0] }]
             if (isAlreadyInCart >= 0) {
                 props.cart[isAlreadyInCart].amountProduct += 1
+                const increaseAmountCart = [...props.cart]
+                const body = { listProduct: increaseAmountCart }
+                props.setNewCart(body)
             } else {
                 const params = { listProduct: newCart }
                 props.setNewCart(params)
