@@ -45,7 +45,6 @@ const Checkout = (props) => {
     function handleCloseReview() {
         setOpenReview(false)
     }
-    console.log(props)
 
     return (
         <div className="checkout-wrapper">

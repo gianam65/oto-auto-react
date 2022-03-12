@@ -1,6 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
-import { Empty, Spin, notification } from 'antd'
+import { Empty, Spin } from 'antd'
+import { Link } from 'react-router-dom'
 import ModalViewProduct from './ModalViewProduct'
 import axios from 'axios'
 import DATAIMAGES from '../default-data/data.js'
@@ -31,7 +32,6 @@ const Product = (props) => {
     const [visibleVoucher, setVisibleVoucher] = useState(false)
     const [visibleModalViewProduct, setVisibleModalViewProduct] = useState(false)
     const [selectedProduct, setSelectedProduct] = useState(null)
-
     useEffect(() => {
         const loadProducts = async () => {
             const response = await axios("https://oto-auto.herokuapp.com/product")
@@ -210,7 +210,9 @@ const Product = (props) => {
                                                 <div key={product._id} className='wrapper-product'>
                                                     <img src={product.imageProduct[0] && DATAIMAGES[Math.floor(Math.random() * 14)]} onClick={() => handleViewProduct(product._id)} style={{ width: '100%', height: '200px' }} />
                                                     <div className="product-item-id">
-                                                        <p className="product-name">{product.nameProduct}</p>
+                                                        <div className="name-and-reviews">
+                                                            <p className="product-name">{product.nameProduct}</p>
+                                                            <Link to={{ pathname: '/reviews', state: { item: product } }}>Reviews: {product.reviewsCustomer && product.reviewsCustomer.length}</Link></div>
                                                         <span className="product-price">Price: {product.priceProduct}</span>
                                                         <span className="product-size">Color: {capitalizeFirstLetter(product.color)}</span>
                                                     </div>

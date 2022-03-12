@@ -11,6 +11,7 @@ import Login from './components/Login';
 import Checkout from './components/Checkout';
 import Blog from './components/Blog';
 import Contact from './components/Contact';
+import Reviews from './components/Reviews';
 import ScrollTop from './ScrollTop'
 
 const GlobalState = React.createContext();
@@ -51,6 +52,7 @@ function App() {
           </Route>
           <Route exact path="/blog" component={Blog} />
           <Route exact path="/contact" component={Contact} />
+          <Route exact path="/reviews" component={Reviews} />
         </Switch>
         <Route exact path="/" component={Home} />
         <Footer />

@@ -332,6 +332,52 @@
     }
 }
 
+.name-and-reviews .product-name {
+    margin-bottom: 5px;
+}
+
+.review-section {
+    padding: 1rem 10rem;
+    margin-top: 135px;
+}
+
+.review-img {
+    border-radius: 20px;
+    box-shadow: 1px 6px 3px #000;
+    width: 450px !important;
+}
+
+.review-left {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.review-title {
+    color: var(--primary-color);
+    text-align: center;
+    font-size: 3rem;
+    border-bottom: 1px solid var(--text-color);
+    font-family: inherit;
+}
+
+.reviewed-box {
+    padding: 15px 0px;
+    max-height: 170px;
+    overflow-y: auto;
+}
+
+.normal-font {
+    font-weight: normal;
+}
+
+.reviewed-box::-webkit-scrollbar {
+    width: 3px;
+}
+.reviewed-box::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
 .product-list .ant-empty {
     display: flex;
     align-items: center;
