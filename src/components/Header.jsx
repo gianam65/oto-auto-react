@@ -26,6 +26,7 @@ const Header = (props) => {
     const [activeMenu, setActiveMenu] = useState('/')
     const [openMobile, setOpenMobile] = useState(false)
     const [windowWidth, setWindowWidth] = useState(getWindowWidth() || 769)
+    const [fixedMenu, setFixedMenu] = useState(false)
 
     useEffect(() => {
         if (window.performance) {
@@ -44,6 +45,15 @@ const Header = (props) => {
     }, [])
 
     // Not good for performance
+    window.addEventListener('scroll', function () {
+        const currentHeight = window.pageYOffset
+        if (currentHeight > 60) {
+            setFixedMenu(true)
+        } else {
+            setFixedMenu(false)
+        }
+    })
+
     if (windowWidth > 768) {
         ROUTES = [
             { link: '/', title: 'Homepage' },
@@ -77,7 +87,7 @@ const Header = (props) => {
 
     return (
         <>
-            <header className='header-fixed'>
+            <header className={fixedMenu ? 'header-fixed active' : 'header-fixed'}>
                 <div className="logo-container">
                     <Link to="/" className="logo-link">
                         <img style={{ width: 80, height: 60 }} src="https://scontent.fhan2-4.fna.fbcdn.net/v/t1.15752-9/274306154_331701969011884_1563692950701305637_n.png?_nc_cat=103&ccb=1-5&_nc_sid=ae9488&_nc_ohc=oCgWJE8bZ04AX9JgqWj&_nc_ht=scontent.fhan2-4.fna&oh=03_AVKOpb31-w1yXobP39FVevxnuqP-EgX9QOzUdXLnnnELVA&oe=624C9A37" alt="" />

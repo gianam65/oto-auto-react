@@ -12,6 +12,7 @@ import Checkout from './components/Checkout';
 import Blog from './components/Blog';
 import Contact from './components/Contact';
 import Reviews from './components/Reviews';
+import GoTop from './components/GoTop'
 import ScrollTop from './ScrollTop'
 
 const GlobalState = React.createContext();
@@ -55,6 +56,7 @@ function App() {
           <Route exact path="/reviews" component={Reviews} />
         </Switch>
         <Route exact path="/" component={Home} />
+        <GoTop />
         <Footer />
       </GlobalState.Provider>
     </div>
