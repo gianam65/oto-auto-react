@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { SRLWrapper } from 'simple-react-lightbox'
 import axios from 'axios'
 import { Spin } from 'antd'
-import { LeftOutlined, RightOutlined } from '@ant-design/icons'
+import { LeftOutlined, RightOutlined, ReloadOutlined, DollarOutlined, CarOutlined } from '@ant-design/icons'
 import DATAIMAGES from '../default-data/data.js'
 
 const SLIDEDATA = [
@@ -12,21 +12,21 @@ const SLIDEDATA = [
         name: "Toyota Vios",
         subName: "Would the best car name ?",
         desc: "Always be 100% honest",
-        link: "Go to products"
+        link: "Shopping now"
     },
     {
         background: DATAIMAGES[Math.floor(Math.random() * 14)],
         name: "Volkswagen Germany",
         subName: "New car arrivals",
         desc: "Know your target market.",
-        link: "Go to products"
+        link: "Our products"
     },
     {
         background: DATAIMAGES[Math.floor(Math.random() * 14)],
         name: "Ford Motor United States",
         subName: "The best car ?",
         desc: "Make sure to mention upgrades",
-        link: "Go to products"
+        link: "Sale products"
     }
 ]
 
@@ -194,7 +194,7 @@ const Home = () => {
                         </div>
                         <div className="blog-content">
                             <h2 className="blog-title">
-                                Compare Ultraboost vs Nemeziz
+                                Nice car for nice moments
                             </h2>
                             <p className="blog-desc">
                                 Trade chicharrones rawing denim beard kombucha locavore and blue bottle bunch
@@ -228,7 +228,7 @@ const Home = () => {
                 <ul className="delivery-list">
                     <li className="delivery-item">
                         <div className="delivery-thumb">
-                            <ion-icon name="car-outline" />
+                            <CarOutlined />
                         </div>
                         <div className="delivery-content">
                             <span className="delivery-title">
@@ -241,7 +241,7 @@ const Home = () => {
                     </li>
                     <li className="delivery-item">
                         <div className="delivery-thumb">
-                            <ion-icon name="shield-outline" />
+                            <DollarOutlined />
                         </div>
                         <div className="delivery-content">
                             <span className="delivery-title">
@@ -254,7 +254,7 @@ const Home = () => {
                     </li>
                     <li className="delivery-item">
                         <div className="delivery-thumb">
-                            <ion-icon name="refresh-outline" />
+                            <ReloadOutlined />
                         </div>
                         <div className="delivery-content">
                             <span className="delivery-title">

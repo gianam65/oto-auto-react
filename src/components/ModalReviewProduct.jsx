@@ -7,7 +7,6 @@ const BACKUPURL = "https://images.pexels.com/photos/1545743/pexels-photo-1545743
 
 const ModalReviewProduct = (props) => {
     const [review, setReview] = useState("")
-    const [isAllWideSpace, setIsAllWideSpace] = useState(false)
 
     function checkIsAllWideSpace() {
         const reviewSplitted = review.split("")
@@ -32,11 +31,10 @@ const ModalReviewProduct = (props) => {
         }
 
         if (checkIsAllWideSpace()) {
-            setIsAllWideSpace(true)
             notification.error({
                 title: "Error",
-                description: "Review error",
-                placement: 'bottomRight',
+                description: "Please don't enter all wide space",
+                placement: 'topRight',
                 bottom: 50,
                 duration: 3,
                 rtl: true,
@@ -46,9 +44,9 @@ const ModalReviewProduct = (props) => {
 
         if (review.length == 0) {
             notification.error({
-                title: "Error",
-                description: "Review error",
-                placement: 'bottomRight',
+                title: "Review error",
+                description: "You have to enter character to review this product",
+                placement: 'topRight',
                 bottom: 50,
                 duration: 3,
                 rtl: true,
@@ -56,7 +54,16 @@ const ModalReviewProduct = (props) => {
             return
         }
 
-        axios.put(url, body).then(res => { }).catch(err => {
+        axios.put(url, body).then(res => {
+            notification.success({
+                title: "Review success",
+                description: "Thanks for you review",
+                placement: 'topRight',
+                bottom: 50,
+                duration: 3,
+                rtl: true,
+            });
+        }).catch(err => {
             console.log(err)
         })
         props.handleCloseReview()
@@ -75,8 +82,8 @@ const ModalReviewProduct = (props) => {
                         <span className="product-price">Price: {lastItemIncart.product.priceProduct}</span>
                         <span className="product-price">Auto company: {lastItemIncart.product.autoCompany}</span>
                         <span className="product-price">Type product: {lastItemIncart.product.typeProduct}</span>
-                        <div className="color-wrapper">
-                            <span className="product-price">Color: </span>
+                        <div className="color-wrapper" style={{ paddingTop: 10 }}>
+                            <span className="product-price" style={{ paddingTop: 0 }}>Color: </span>
                             <span className="product-color" style={{ background: lastItemIncart.product.color }}></span>
                         </div>
                     </div>
@@ -89,7 +96,7 @@ const ModalReviewProduct = (props) => {
                             ?
                             <div className="reviewed-box">
                                 {lastItemIncart.product.reviewsCustomer.map(item => {
-                                    return <p style={{ fontStyle: "italic" }}><span style={{ fontWeight: 700 }}>{item.nameCustomer}:</span> {item.review}</p>
+                                    return <p style={{ fontStyle: "italic" }}><span style={{ fontWeight: 700, fontStyle: "initial" }}>{item.nameCustomer}:</span> {item.review}</p>
                                 })}
                             </div>
                             :
@@ -99,12 +106,16 @@ const ModalReviewProduct = (props) => {
 
                 <div className="start-review">
                     <input
-                        style={{ borderBottom: `1px solid ${review.length == 0 || isAllWideSpace ? "#ff5e57" : "#2a2a2a"}` }}
+                        style={{ borderBottom: `1px solid ${review.length == 0 || (review.length != 0 && checkIsAllWideSpace()) ? "#ff5e57" : "#2a2a2a"}` }}
                         onChange={e => { setReview(e.target.value); checkIsAllWideSpace() }}
                         type="text" className="review-input"
-                        placeholder={`${review.length == 0 ? "Please fill up this input to review" : "Enter your review here..."}`}
+                        placeholder="Enter your review here..."
                     />
-                    <span style={{ marginTop: 6, marginLeft: 8, display: "block", color: "#ff5e57" }}>{checkIsAllWideSpace() ? "Please don't enter wide space" : <span style={{ height: 23, display: "inline-block" }}></span>}</span>
+                    {
+                        review.length != 0 && checkIsAllWideSpace()
+                            ? <span style={{ marginTop: 6, marginLeft: 8, display: "block", color: "#ff5e57" }}>"Please don't review with all wide space"</span>
+                            : <span style={{ height: 22, display: "inline-block", width: '100%' }}></span>
+                    }
                 </div>
             </>
         )
@@ -114,7 +125,7 @@ const ModalReviewProduct = (props) => {
     return (
         <Modal
             title="Review products"
-            width={900}
+            width={1065}
             visible={props.openReview}
             onCancel={props.handleCloseReview}
             onOk={() => handleReviewProduct()}

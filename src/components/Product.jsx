@@ -11,10 +11,10 @@ const menuFilter = [
         panel: 'all products',
     },
     {
-        panel: 'Oto',
+        panel: 'Car',
     },
     {
-        panel: 'Wheels',
+        panel: 'Wheel',
     },
     {
         panel: 'Steering wheel',
@@ -79,7 +79,7 @@ const Product = (props) => {
                 result = color === 'all' ? productsList : productsList.filter(item => item.color.toLowerCase() === color.toLowerCase())
                 break;
             case 'type':
-                result = activeMenu === 'all products' ? productsList : productsList.filter(item => item.typeProduct.toLowerCase() === activeMenu.toLowerCase())
+                result = activeMenu === 'all products' ? productsList : productsList.filter(item => item.typeProduct.toLowerCase() == activeMenu.toLowerCase())
                 break;
             default:
                 return productsList;
@@ -212,7 +212,11 @@ const Product = (props) => {
                                                     <div className="product-item-id">
                                                         <div className="name-and-reviews">
                                                             <p className="product-name">{product.nameProduct}</p>
-                                                            <Link to={{ pathname: '/reviews', state: { item: product } }}>Reviews: {product.reviewsCustomer && product.reviewsCustomer.length}</Link></div>
+                                                            <div className="discount-and-reviews">
+                                                                <span className="product-discount">Discount: {product.amountProduct}%</span>
+                                                                <Link className="product-review-count" to={{ pathname: '/reviews', state: { item: product } }}>Reviews: {product.reviewsCustomer && product.reviewsCustomer.length}</Link>
+                                                            </div>
+                                                        </div>
                                                         <span className="product-price">Price: {product.priceProduct}</span>
                                                         <span className="product-size">Color: {capitalizeFirstLetter(product.color)}</span>
                                                     </div>

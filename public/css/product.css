@@ -256,8 +256,28 @@
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 1;
     overflow: hidden;
-    font-weight: 300;
+    font-weight: 400;
     font-size: 1.8rem;
+}
+
+.product-review-count {
+    color: var(--text-color);
+}
+
+.product-review-count:hover {
+    color: var(--primary-color);
+}
+
+.discount-and-reviews {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 5px;
+    font-size: 15px;
+}
+
+.product-item-id .product-price {
+    color: var(--primary-color);
 }
 
 .product-size {

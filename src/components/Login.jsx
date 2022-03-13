@@ -3,17 +3,61 @@ import axios from 'axios'
 import { notification, Button } from 'antd'
 
 const Login = () => {
-    const [email, setEmail] = useState(null)
-    const [userName, setUserName] = useState(null)
-    const [passWord, setPassWord] = useState(null)
-    const [phone, setPhone] = useState(null)
-    const [emailLogin, setEmailLogin] = useState(null)
-    const [passwordLogin, setPasswordLogin] = useState(null)
+    const [email, setEmail] = useState("")
+    const [userName, setUserName] = useState("")
+    const [passWord, setPassWord] = useState("")
+    const [phone, setPhone] = useState("")
+    const [emailLogin, setEmailLogin] = useState("")
+    const [passwordLogin, setPasswordLogin] = useState("")
     const [isChecked, setIsChecked] = useState(false)
 
+    function validateFields(type, value) {
+        const inputField = document && document.getElementById(type)
+        switch (type) {
+            case "username":
+                styleForInvalidFields(inputField, !value, "You have to enter name")
+                break;
+            case "email":
+                const emailSplited = value.split("")
+                let isValidEmail = emailSplited.findIndex(character => character.includes("@"))
+                styleForInvalidFields(inputField, (!value || isValidEmail == -1), "Email have to includes @")
+                break;
+            case "password":
+                styleForInvalidFields(inputField, (!value || value.length < 6), "Password must be at least 6 characters")
+                break;
+            case "phone":
+                styleForInvalidFields(inputField, !value, "You have to enter phone")
+                break;
+            case "emailLogin":
+                styleForInvalidFields(inputField, !value, "You have to enter email")
+                break;
+            case "passwordLogin":
+                styleForInvalidFields(inputField, !value, "You have to enter password")
+                break;
+            default:
+                break;
+        }
+    }
+
+    function styleForInvalidFields(element, result, message) {
+        if (element && result) {
+            element.style.border = "1px solid #ff5e57"
+            element.placeholder = message
+        } else {
+            element.style.border = "1px solid #607d8b"
+        }
+    }
 
     function handleRegister(e) {
         e.preventDefault()
+        if (!userName || !passWord || !email || !phone) {
+            notification.error({
+                message: "Register error",
+                description: "Register error",
+                duration: 3,
+            })
+            return
+        }
         const userData = {
             nameCustomer: userName,
             emailCustomer: email,
@@ -22,17 +66,31 @@ const Login = () => {
         }
         axios.post("https://oto-auto.herokuapp.com/customer", userData).then((res) => {
             refreshState()
-            notification.open({
+            notification.success({
                 message: "Success",
                 description: "Register success",
                 duration: 3,
             })
             setIsChecked(false)
-        }).catch(err => console.log(err))
+        }).catch(err => {
+            notification.error({
+                message: "Register error",
+                description: err,
+                duration: 3,
+            })
+        })
     }
 
     function handleLogin(e) {
         e.preventDefault();
+        if (!emailLogin || !passwordLogin) {
+            notification.error({
+                message: "Failure to login",
+                description: "Login failure",
+                duration: 3,
+            })
+            return
+        }
         const customerInfor = {
             emailCustomer: emailLogin,
             password: passwordLogin
@@ -64,10 +122,10 @@ const Login = () => {
     }
 
     function refreshState() {
-        setEmail(null)
-        setUserName(null)
-        setPassWord(null)
-        setPhone(null)
+        setEmail("")
+        setUserName("")
+        setPassWord("")
+        setPhone("")
     }
 
     return (
@@ -84,32 +142,29 @@ const Login = () => {
                             <form action method>
                                 <div className="input-group inputBx">
                                     <span>Email</span>
-                                    <input value={emailLogin} onChange={(e) => setEmailLogin(e.target.value)} type="text" placeholder="gianam65@xyz.com" className="inp" />
+                                    <input value={emailLogin}
+                                        onChange={(e) => { setEmailLogin(e.target.value); validateFields("emailLogin", e.target.value) }}
+                                        onBlur={e => validateFields("emailLogin", e.target.value)}
+                                        type="text" className="inp"
+                                        id="emailLogin"
+                                    />
                                 </div>
                                 <div className="input-group inputBx">
                                     <span>Password</span>
-                                    <input value={passwordLogin} onChange={(e) => setPasswordLogin(e.target.value)} type="password" placeholder="********" className="inp" />
+                                    <input value={passwordLogin}
+                                        onChange={(e) => { setPasswordLogin(e.target.value); validateFields("passwordLogin", e.target.value) }}
+                                        type="password" className="inp"
+                                        onBlur={e => validateFields("passwordLogin", e.target.value)}
+                                        id="passwordLogin"
+                                    />
                                 </div>
                                 <div className="inputBx" style={{ marginTop: '20px' }}>
-                                    <Button
-                                        onClick={(e) => handleLogin(e)}
-                                        className="btn-login"
-                                        style={{
-                                            width: '100%',
-                                            padding: '13px 20px',
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            justifyContent: 'center',
-                                            height: '100%',
-                                            letterSpacing: '1px'
-                                        }}
-                                        disabled={emailLogin == null || passwordLogin == null}
-                                    >Login</Button>
+                                    <input className="btn-login" type="submit" onClick={(e) => handleLogin(e)} />
                                 </div>
                                 <div className="inputBx not-have-acc" style={{ marginTop: '20px' }}>
                                     <p style={{ marginTop: '5px', marginBottom: 0, marginRight: 10 }}>Don't have an account?</p>
                                     <span className="register-here" onClick={() => setIsChecked(true)}
-                                        style={{ marginTop: 0, color: "#ff5e57", cursor: "pointer", fontWeight: 600, fontSize: 16 }}>
+                                        style={{ marginTop: 0, color: "#ff5e57", cursor: "pointer", fontWeight: 600, fontSize: 13 }}>
                                         Register
                                     </span>
                                 </div>
@@ -119,40 +174,50 @@ const Login = () => {
                             <form>
                                 <div className="input-group inputBx">
                                     <span>Username</span>
-                                    <input type="text" value={userName} onChange={(e) => setUserName(e.target.value)} placeholder="Ex. abc123" name className="inp" />
+                                    <input
+                                        type="text"
+                                        value={userName}
+                                        onChange={(e) => { setUserName(e.target.value); validateFields("username", e.target.value) }}
+                                        onBlur={e => validateFields("username", e.target.value)}
+                                        className="inp"
+                                        id="username"
+                                    />
                                 </div>
                                 <div className="input-group inputBx">
                                     <span>Email</span>
-                                    <input type="text" onChange={(e) => setEmail(e.target.value)} value={email} placeholder="namdev@xyz.com" className="inp" />
+                                    <input type="text"
+                                        onChange={(e) => { setEmail(e.target.value); validateFields("email", e.target.value) }}
+                                        value={email} className="inp"
+                                        onBlur={e => validateFields("email", e.target.value)}
+                                        id="email"
+                                    />
                                 </div>
                                 <div className="input-group inputBx">
                                     <span>Password</span>
-                                    <input type="password" placeholder="********" value={passWord} onChange={(e) => setPassWord(e.target.value)} className="inp" />
+                                    <input type="password" value={passWord}
+                                        onChange={(e) => { setPassWord(e.target.value); validateFields("password", e.target.value) }}
+                                        className="inp"
+                                        onBlur={e => validateFields("password", e.target.value)}
+                                        id="password"
+                                    />
                                 </div>
                                 <div className="input-group inputBx">
                                     <span>Phone</span>
-                                    <input type="text" placeholder="0123456789" value={phone} onChange={(e) => setPhone(e.target.value)} className="inp" />
+                                    <input type="text"
+                                        value={phone}
+                                        onChange={(e) => { setPhone(e.target.value); validateFields("phone", e.target.value) }}
+                                        className="inp"
+                                        onBlur={e => validateFields("phone", e.target.value)}
+                                        id="phone"
+                                    />
                                 </div>
                                 <div className="inputBx" style={{ marginTop: '20px' }}>
-                                    <Button
-                                        onClick={(e) => handleRegister(e)}
-                                        className="btn-login"
-                                        style={{
-                                            width: '100%',
-                                            padding: '13px 20px',
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            justifyContent: 'center',
-                                            height: '100%',
-                                            letterSpacing: '1px'
-                                        }}
-                                        disabled={userName == null || email == null || passWord == null || phone == null}
-                                    >Sign Up</Button>
+                                    <input className="btn-login" type="submit" onClick={(e) => handleRegister(e)} />
                                 </div>
                                 <div className="inputBx not-have-acc">
                                     <p style={{ marginTop: '5px', marginBottom: 0, marginRight: 12 }}>Already have an account?</p>
                                     <span className="register-here" onClick={() => setIsChecked(false)}
-                                        style={{ marginTop: 0, color: "#ff5e57", cursor: "pointer", fontWeight: 600, fontSize: 16 }}>
+                                        style={{ marginTop: 0, color: "#ff5e57", cursor: "pointer", fontWeight: 600, fontSize: 13 }}>
                                         Login
                                     </span>
                                 </div>

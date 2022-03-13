@@ -17,7 +17,7 @@
 }
 
 .check-out-product {
-    width: 80%;
+    width: 70%;
     margin: 0 auto;
     box-shadow: 0rem 0rem 0.3rem;
 }
@@ -109,7 +109,7 @@
 }
 
 .check-out-footer {
-    width: 80%;
+    width: 70%;
     margin: 2.2rem auto;
 }
 
@@ -266,6 +266,22 @@
 }
 
 @media screen and (max-width: 768px) {
+    .review-section {
+        padding: 1rem 2.2rem;
+    }
+    .review-wrapper {
+        flex-direction: column;
+        height: unset !important;
+    }
+    .review-left {
+        width: 100%;
+    }
+    
+    .review-right {
+        width: 100%;
+        margin-top: 10px;
+    }
+
     .check-out-product {
         width: 100%;
     }

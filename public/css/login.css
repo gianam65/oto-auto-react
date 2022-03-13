@@ -82,6 +82,12 @@
     border: 1px solid #c6c6c6;
     margin-top: 5px;
 }
+
+.input-group .inp::placeholder {
+    font-size: 13px;
+    letter-spacing: 0px;
+}
+
 .submit-inp{
    background: linear-gradient(30deg,red,blue);
    border: none !important;

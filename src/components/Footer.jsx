@@ -6,7 +6,7 @@ const Footer = () => {
             <footer className="footer">
                 <div className="footer-about">
                     <div className="footer-logo">
-                        <span>FENCO SHOP</span>
+                        <span>AUTO SHOP</span>
                     </div>
                     <p className="about-desc">
                         The customer is at the heart of our unique business model, which includes design.
@@ -33,7 +33,7 @@ const Footer = () => {
                                 Contact us
                             </h6>
                             <span className="sub-desc">
-                                gianamweb@gmail.com
+                                team5@gmail.com
                             </span>
                             <span className="sub-desc">
                                 +8469193637

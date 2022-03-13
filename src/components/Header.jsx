@@ -3,7 +3,7 @@ import Cart from './Cart.jsx'
 import { AlignCenterOutlined } from '@ant-design/icons'
 import { Link } from 'react-router-dom'
 
-const ROUTES = [
+let ROUTES = [
     {
         link: '/',
         title: 'Homepage'
@@ -25,6 +25,7 @@ const ROUTES = [
 const Header = (props) => {
     const [activeMenu, setActiveMenu] = useState('/')
     const [openMobile, setOpenMobile] = useState(false)
+    const [windowWidth, setWindowWidth] = useState(getWindowWidth() || 769)
 
     useEffect(() => {
         if (window.performance) {
@@ -32,7 +33,39 @@ const Header = (props) => {
                 setActiveMenu(window.location.pathname)
             }
         }
+
+        function handleResize() {
+            setWindowWidth(getWindowWidth())
+        }
+
+        window.addEventListener("resize", handleResize)
+        return () => window.removeEventListener("resize", handleResize)
+
     }, [])
+
+    // Not good for performance
+    if (windowWidth > 768) {
+        ROUTES = [
+            { link: '/', title: 'Homepage' },
+            { link: '/product', title: 'Products' },
+            { link: '/blog', title: 'Blog Entries' },
+            { link: '/contact', title: 'Contact Us' }
+        ]
+
+    } else {
+        ROUTES = [
+            { link: '/', title: 'Homepage' },
+            { link: '/product', title: 'Products' },
+            { link: '/blog', title: 'Blog Entries' },
+            { link: '/contact', title: 'Contact Us' },
+            { link: '/checkout', title: "Checkout" },
+            { link: '/login', title: "Login" },
+        ]
+    }
+
+    function getWindowWidth() {
+        return window.innerWidth
+    }
 
     function handleRemoveActiveMenu() {
         setActiveMenu('/checkout')
