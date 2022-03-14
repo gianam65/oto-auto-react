@@ -12,6 +12,7 @@ import Checkout from './components/Checkout';
 import Blog from './components/Blog';
 import Contact from './components/Contact';
 import Reviews from './components/Reviews';
+import Admin from './components/Admin';
 import GoTop from './components/GoTop'
 import ScrollTop from './ScrollTop'
 
@@ -21,6 +22,7 @@ function App() {
   const [cart, setCart] = useState([])
   const customerInfor = JSON.parse(localStorage.getItem("customer-infor"))
   const idCart = customerInfor && customerInfor.idCart
+  const currentURL = window && window.location && window.location.pathname
 
   useEffect(() => {
     if (idCart) {
@@ -40,7 +42,7 @@ function App() {
   return (
     <div className="wrapper">
       <GlobalState.Provider>
-        <Header idCart={idCart} customerInfor={customerInfor} cart={cart} setNewCart={(value) => setNewCart(value)} />
+        {currentURL != '/admin' && <Header idCart={idCart} customerInfor={customerInfor} cart={cart} setNewCart={(value) => setNewCart(value)} />}
         <ScrollTop />
         <Switch>
           <Route exact path="/home" component={Home} />
@@ -54,6 +56,7 @@ function App() {
           <Route exact path="/blog" component={Blog} />
           <Route exact path="/contact" component={Contact} />
           <Route exact path="/reviews" component={Reviews} />
+          <Route exact path="/admin" component={Admin} />
         </Switch>
         <Route exact path="/" component={Home} />
         <GoTop />

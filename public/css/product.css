@@ -310,6 +310,83 @@
     background-color: #000000;
 }
 
+.action-icon .add-icon {
+    font-size: 16px;
+    margin-right: 12px;
+    cursor: pointer;
+}
+
+.manage-product {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+}
+
+.manage-product .ant-table-wrapper {
+    width: 100%;
+}
+
+.manage-product .title {
+    color: var(--primary-color);
+    font-size: 3.2rem;
+}
+
+.manage-product-action {
+    width: 100%;
+    margin: 12px 0px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.add-product-btn {
+    color: var(--text-color) !important;
+    border-color: var(--text-color) !important;
+}
+
+.add-product-btn:hover {
+    color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+}
+
+.add-product-wrapper {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.namefield {
+    margin-bottom: 12px;
+}
+
+.namefield label {
+    display: inline-block;
+    width: 35%;
+}
+
+.namefield input {
+    width: 65%;
+    display: inline-block;
+    padding: 2px 8px;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid var(--text-color);
+}
+
+.action-icon .add-icon:hover, .action-icon .delete-icon:hover {
+    color: var(--primary-color);
+}
+
+.action-icon .delete-icon {
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.admin-wrapper {
+    padding: 1rem 10rem;
+}
+
 @media screen and (max-width: 768px) {
     .product-content {
         padding: 0rem 1.5rem;

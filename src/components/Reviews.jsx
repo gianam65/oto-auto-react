@@ -3,7 +3,6 @@ import React from 'react'
 const BACKUPURL = "https://images.pexels.com/photos/1545743/pexels-photo-1545743.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
 const Reviews = (props) => {
     const reviews = props.location.state.item
-    console.log(reviews)
     return (
         <div className="review-section">
             <h3 className="review-title">Product reviews</h3>

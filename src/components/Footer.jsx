@@ -57,7 +57,6 @@ const Footer = () => {
                     </ul>
                 </div>
             </footer>
-            <p className="copy-right">Copyright at adidas.com & fenco shop</p>
         </>
     )
 }
