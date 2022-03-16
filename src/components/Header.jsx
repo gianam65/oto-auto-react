@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import Cart from './Cart.jsx'
 import { AlignCenterOutlined } from '@ant-design/icons'
 import { Link } from 'react-router-dom'
+import { notification } from 'antd'
 
 let ROUTES = [
     {
@@ -85,6 +86,15 @@ const Header = (props) => {
         setActiveMenu('/product')
     }
 
+    function handleLogout() {
+        localStorage.removeItem("customer-infor")
+        notification.success({
+            message: "Success",
+            description: "Logout success",
+            duration: 3,
+        })
+        window.location.href = window.location.origin
+    }
     return (
         <>
             <header className={fixedMenu ? 'header-fixed active' : 'header-fixed'}>
@@ -108,10 +118,18 @@ const Header = (props) => {
                         }
                     </ul>
                 </nav>
-                <div style={{ display: 'flex', alignItems: 'center' }}>
-                    {props.customerInfor ? <span style={{ fontWeight: 600 }}>{props.customerInfor.nameCustomer}</span> : <Link to='/login' className={`menu-link`} style={{ paddingRight: 0 }}>
-                        Login/Register
-                    </Link>}
+                <div id="name-and-cart" style={{ display: 'flex', alignItems: 'center' }}>
+                    {props.customerInfor
+                        ?
+                        <div className="name-wrapper">
+                            <span style={{ fontWeight: 600 }}>{props.customerInfor.nameCustomer}</span>
+                            <div className="logout-btn" onClick={handleLogout}>Logout</div>
+                        </div>
+                        :
+                        <Link to='/login' className={`menu-link`} style={{ paddingRight: 0 }}>
+                            Login/Register
+                        </Link>
+                    }
                     <Cart handleActiveCurrentMenu={handleActiveCurrentMenu} handleRemoveActiveMenu={handleRemoveActiveMenu} idCart={props.idCart} cart={props.cart} setNewCart={props.setNewCart} />
                 </div>
             </header>

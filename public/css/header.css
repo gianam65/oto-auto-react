@@ -251,6 +251,33 @@
     background-color: rgba(0, 0, 0, 0.6);
 }
 
+.name-wrapper {
+    position: relative;
+}
+
+.name-wrapper:hover > .logout-btn {
+    opacity: 1;
+    transform: translateY(0px);
+}
+
+.logout-btn {
+    position: absolute;
+    background-color: var(--white-color);
+    box-shadow: 3px 4px 2px rgba(0, 0, 0, 0.6);
+    padding: 2px 18px;
+    border-bottom-left-radius: 2px;
+    border-bottom-right-radius: 2px;
+    cursor: pointer;
+    transition: 0.2s;
+    opacity: 0;
+    transform: translateY(3px);
+}
+
+.logout-btn:hover {
+    background-color: var(--primary-color);
+    color: var(--white-color);
+}
+
 .cart-close .global-icon {
     color: var(--text-color);
 }

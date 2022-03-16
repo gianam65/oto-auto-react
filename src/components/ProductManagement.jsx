@@ -1,6 +1,6 @@
 import { useState, useRef, React } from 'react'
 import { Table, Button, Modal, notification } from 'antd'
-import { DeleteOutlined, PlusCircleOutlined } from '@ant-design/icons'
+import { DeleteOutlined } from '@ant-design/icons'
 import axios from 'axios'
 
 const ProductManagement = (props) => {
