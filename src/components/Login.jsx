@@ -137,7 +137,7 @@ const Login = () => {
             <div className="contentBx">
                 <div className="formBx">
                     <div className="box">
-                        <input type="checkbox" className="toggle-btn" onChange={() => setIsChecked(!isChecked)} checked={isChecked} name />
+                        <input type="checkbox" className="toggle-btn" style={{ display: "none" }} onChange={() => setIsChecked(!isChecked)} checked={isChecked} name />
                         <div className="signup">
                             <form action method>
                                 <div className="input-group inputBx">
