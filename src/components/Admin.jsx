@@ -11,7 +11,8 @@ const { TabPane } = Tabs
 const Admin = () => {
     const [listProducts, setListProducts] = useState([])
     const [listAdmin, setListAdmin] = useState([])
-    const [listUsers, setListUsers] = useState([])
+    // const [listUsers, setListUsers] = useState([])
+    const [orders, setOrders] = useState([])
     useEffect(() => {
         const loadProducts = async () => {
             const res = await axios.get("https://oto-auto.herokuapp.com/product")
@@ -23,14 +24,14 @@ const Admin = () => {
             setListAdmin(res.data.data || [])
         }
 
-        const loadUsers = async () => {
-            const res = await axios.get("https://oto-auto.herokuapp.com/customer")
-            setListUsers(res.data.data || [])
+        const loadOrders = async () => {
+            const res = await axios.get("https://oto-auto.herokuapp.com/order")
+            setOrders(res.data.data)
         }
 
         loadListAdmin()
         loadProducts()
-        loadUsers()
+        loadOrders()
     }, [])
 
     function handleLogout() {
@@ -57,7 +58,7 @@ const Admin = () => {
                         <ProductManagement listProducts={listProducts} setListProducts={(value) => setListProducts(value)} />
                     </TabPane>
                     <TabPane tab="Order management" key="order">
-                        <AdminMangagementOrder listUsers={listUsers} setListUsers={(value) => setListUsers(value)} />
+                        <AdminMangagementOrder orders={orders} setOrders={(value) => setOrders(value)} />
                     </TabPane>
                 </Tabs>
             </div>

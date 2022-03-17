@@ -12,6 +12,7 @@ import Checkout from './components/Checkout';
 import Blog from './components/Blog';
 import Contact from './components/Contact';
 import Reviews from './components/Reviews';
+import ChangePassword from './components/ChangePassword';
 import Admin from './components/Admin';
 import GoTop from './components/GoTop'
 import ScrollTop from './ScrollTop'
@@ -56,6 +57,7 @@ function App() {
           <Route exact path="/blog" component={Blog} />
           <Route exact path="/contact" component={Contact} />
           <Route exact path="/reviews" component={Reviews} />
+          <Route exact path="/changepassword" component={ChangePassword} />
           <Route exact path="/admin" component={Admin} />
         </Switch>
         <Route exact path="/" component={Home} />

@@ -4,7 +4,7 @@ import { DiffOutlined } from '@ant-design/icons'
 
 const AdminMangagementOrder = (props) => {
     function handleProduceDatasource() {
-        return props.listUsers.filter(user => {
+        return props.orders.filter(user => {
             return user.emailCustomer || user.nameCustomer
         })
     }

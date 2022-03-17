@@ -88,6 +88,11 @@
     letter-spacing: 0px;
 }
 
+#currentPass-desc, #newPass-desc, #confirmPass-desc {
+    font-size: 12px;
+    color: var(--primary-color);
+}
+
 .submit-inp{
    background: linear-gradient(30deg,red,blue);
    border: none !important;

@@ -263,19 +263,31 @@
 .logout-btn {
     position: absolute;
     background-color: var(--white-color);
-    box-shadow: 3px 4px 2px rgba(0, 0, 0, 0.6);
-    padding: 2px 18px;
+    box-shadow: 6px -2px 3px rgba(0, 0, 0, 0.6);
     border-bottom-left-radius: 2px;
     border-bottom-right-radius: 2px;
     cursor: pointer;
     transition: 0.2s;
     opacity: 0;
+    width: 150px;
+    left: -90%;
     transform: translateY(3px);
 }
 
-.logout-btn:hover {
+.change-password:hover, .logout:hover {
     background-color: var(--primary-color);
     color: var(--white-color);
+}
+
+.change-password {
+    display: inline-block;
+    width: 100%;
+    color: var(--text-color);
+}
+
+.change-password, .logout {
+    transition: 0.25s all;
+    padding: 4px 18px;
 }
 
 .cart-close .global-icon {

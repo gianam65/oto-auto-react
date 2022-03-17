@@ -95,6 +95,7 @@ const Header = (props) => {
         })
         window.location.href = window.location.origin
     }
+
     return (
         <>
             <header className={fixedMenu ? 'header-fixed active' : 'header-fixed'}>
@@ -123,7 +124,10 @@ const Header = (props) => {
                         ?
                         <div className="name-wrapper">
                             <span style={{ fontWeight: 600 }}>{props.customerInfor.nameCustomer}</span>
-                            <div className="logout-btn" onClick={handleLogout}>Logout</div>
+                            <div className="logout-btn">
+                                <div className="logout" onClick={handleLogout}>Logout</div>
+                                <Link className="change-password" to={{ pathname: '/changepassword', state: { password: props.customerInfor.password } }}>Change password</Link>
+                            </div>
                         </div>
                         :
                         <Link to='/login' className={`menu-link`} style={{ paddingRight: 0 }}>
