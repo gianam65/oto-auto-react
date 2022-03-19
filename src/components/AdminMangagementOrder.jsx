@@ -1,40 +1,64 @@
 import React from 'react'
-import { Table, Button } from 'antd'
+import { Table, Button, Tooltip, notification } from 'antd'
 import { DiffOutlined } from '@ant-design/icons'
+import axios from 'axios'
 
 const AdminMangagementOrder = (props) => {
-    function handleProduceDatasource() {
-        return props.orders.filter(user => {
-            return user.emailCustomer || user.nameCustomer
-        })
-    }
     function renderColumn() {
         const columns = [
             {
                 title: "Name customer",
-                dataIndex: "nameCustomer"
+                render: (record) => {
+                    return <span style={{ textTransform: "capitilize" }}>
+                        {record.idCustomer.nameCustomer}
+                    </span>
+                }
             },
             {
                 title: "Email customer",
-                dataIndex: "emailCustomer"
+                render: (record) => {
+                    return <span>{record.idCustomer.emailCustomer}</span>
+                }
             },
             {
                 title: "Phone customer",
-                dataIndex: "phoneCustomer"
+                render: (record) => {
+                    return <span>{record.idCustomer.phoneCustomer}</span>
+                }
             },
             {
-                title: "Order count",
+                title: "Total price",
                 render: (record) => {
-                    return <span>{record.listOrder && record.listOrder.length}</span>
+                    return <span>{record.totalPrice}</span>
+                }
+            },
+            {
+                title: "Status",
+                render: (record) => {
+                    return (
+                        <span
+                            style={{
+                                textTransform: "capitalize",
+                                fontWeight: 500,
+                                color: (record.statusOrder == "success" || record.statusOrder == "Success") ? "#1dd1a1" : record.statusOrder == "failure" ? "#ff5e57" : "#feca57"
+                            }}
+                        >
+                            {record.statusOrder}
+                        </span>
+                    )
                 }
             },
             {
                 title: "Action",
                 render: (record) => {
                     return <div className="action-icon">
-                        <Button onClick={() => handleAddOrderCustomer(record._id)}>
-                            Add order
-                            <DiffOutlined style={{ marginLeft: 8 }} className="delete-icon" />
+                        <Button onClick={() => handleCreateOrder(record._id)}>
+                            {
+                                record.statusOrder != "success" &&
+                                <Tooltip placement='top' title="Create order">
+                                    <DiffOutlined className="delete-icon" />
+                                </Tooltip>
+                            }
                         </Button>
                     </div>
                 }
@@ -43,15 +67,23 @@ const AdminMangagementOrder = (props) => {
         return columns
     }
 
-    const handleAddOrderCustomer = (id) => {
-        console.log(id)
+    const handleCreateOrder = (id) => {
+        const statusOrder = { statusOrder: "success" }
+        axios.put(`https://oto-auto.herokuapp.com/order/submit/${id}`, statusOrder).then(res => {
+            props.setOrders(res.data.data)
+            notification.success({
+                message: "Success",
+                description: "Create order success",
+                duration: 3,
+            })
+        }).catch(err => console.log(err))
     }
 
     return (
         <div className="manage-product">
             <span className="title" style={{ marginBottom: 15 }}>Order management</span>
             <Table
-                dataSource={handleProduceDatasource()}
+                dataSource={props.orders}
                 columns={renderColumn()}
                 bordered
             />

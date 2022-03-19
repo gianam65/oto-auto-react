@@ -4,6 +4,7 @@ import { Tabs } from 'antd'
 import UserManagement from './UserManagement'
 import ProductManagement from './ProductManagement'
 import AdminMangagementOrder from './AdminMangagementOrder'
+import AdminChart from './AdminChart'
 import axios from 'axios'
 
 const { TabPane } = Tabs
@@ -59,6 +60,9 @@ const Admin = () => {
                     </TabPane>
                     <TabPane tab="Order management" key="order">
                         <AdminMangagementOrder orders={orders} setOrders={(value) => setOrders(value)} />
+                    </TabPane>
+                    <TabPane tab="Statistic" key="statistic">
+                        <AdminChart orders={orders} setOrders={(value) => setOrders(value)} />
                     </TabPane>
                 </Tabs>
             </div>

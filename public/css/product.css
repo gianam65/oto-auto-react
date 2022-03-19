@@ -378,6 +378,44 @@
     color: var(--primary-color);
 }
 
+.ant-btn:hover {
+    color: var(--primary-color) !important;
+    border: 1px solid var(--primary-color) !important;
+}
+
+.ant-tabs-tab:hover {
+    color: var(--primary-color) !important;
+}
+
+.ant-tabs-ink-bar {
+    background-color: var(--primary-color) !important;
+}
+
+.ant-pagination-item-active {
+    border: 1px solid var(--primary-color) !important;
+}
+
+.ant-pagination-item-active a {
+    color: var(--primary-color) !important;
+}
+
+.ant-pagination-item:hover {
+    border: 1px solid var(--primary-color) !important;
+}
+
+.ant-pagination-item a:hover {
+    color: var(--primary-color) !important;
+}
+
+.ant-pagination-prev:hover .ant-pagination-item-link, .ant-pagination-next:hover .ant-pagination-item-link {
+    color: var(--primary-color) !important;
+    border: 1px solid var(--primary-color) !important;
+}
+
+.ant-tabs-tab-active .ant-tabs-tab-btn{
+    color: var(--primary-color) !important;
+}
+
 .action-icon .delete-icon {
     font-size: 16px;
     cursor: pointer;

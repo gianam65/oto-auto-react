@@ -1,6 +1,6 @@
 import React from 'react'
-import { Table, Button, notification } from 'antd'
-import { UserAddOutlined } from '@ant-design/icons'
+import { Table, Button, notification, Tooltip } from 'antd'
+import { UserAddOutlined, UserDeleteOutlined } from '@ant-design/icons'
 import axios from 'axios'
 
 const UserManagement = (props) => {
@@ -22,7 +22,13 @@ const UserManagement = (props) => {
                 title: 'Curent role',
                 dataIndex: 'role',
                 render: (record) => {
-                    return <span>{record == 'superAdmin' ? 'Admin' : 'Employee'}</span>
+                    return <span style={{
+                        fontWeight: 500,
+                        color: record == 'superAdmin' ? "#ff5e57" : "#2a2a2a"
+                    }}
+                    >
+                        {record == 'superAdmin' ? 'Admin' : 'Employee'}
+                    </span>
                 }
             },
             {
@@ -33,17 +39,42 @@ const UserManagement = (props) => {
                             ?
                             <div className="action-icon">
                                 <Button onClick={() => handleUpdateToAdmin(record._id)}>
-                                    Upgrade to admin
-                                    <UserAddOutlined style={{ marginLeft: 8 }} className="delete-icon" />
+                                    <Tooltip placement='top' title="Upgrade to admin">
+                                        <UserAddOutlined className="delete-icon" />
+                                    </Tooltip>
                                 </Button>
                             </div>
                             :
-                            <span>Don't have action</span>
+                            <div className="action-icon">
+                                <Button onClick={() => handleDowngrade(record._id)}>
+                                    <Tooltip placement='top' title="Downgrade to employee">
+                                        <UserDeleteOutlined />
+                                    </Tooltip>
+                                </Button>
+                            </div>
                     )
                 }
             },
         ]
         return columns
+    }
+
+    const handleDowngrade = (id) => {
+        let body = { role: "admin" }
+        axios.put(`https://oto-auto.herokuapp.com/admin/author/${id}`, body).then(res => {
+            props.setListAdmin(res.data.data)
+            notification.success({
+                message: "Success",
+                description: "Change role success",
+                duration: 3,
+            })
+        }).catch(err => {
+            notification.error({
+                message: "Error",
+                description: "Change role failed",
+                duration: 3,
+            })
+        })
     }
 
     const handleUpdateToAdmin = (id) => {

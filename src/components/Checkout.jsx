@@ -2,8 +2,8 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Empty } from 'antd'
 import DATAIMAGES from '../default-data/data.js'
-import { CheckOutlined } from '@ant-design/icons'
 import ModalReviewProduct from './ModalReviewProduct'
+import axios from 'axios'
 
 const Checkout = (props) => {
     const [openReview, setOpenReview] = useState(false)
@@ -25,6 +25,23 @@ const Checkout = (props) => {
         const params = { listProduct: [] }
         props.setNewCart(params)
         setOpenReview(true)
+    }
+
+    const handleCreateImplictOrder = () => {
+        const bodyToCreateOrder = {
+            StatusOrder: "pending",
+            totalPrice: calcTotalPrice() || 0,
+            idCustomer: props.customerInfor && props.customerInfor._id,
+            listProduct: props.currentItemInCart,
+            phoneOrder: props.customerInfor && props.customerInfor.phoneCustomer,
+            emailorder: props.customerInfor && props.customerInfor.emailCustomer
+        }
+
+        axios.post("https://oto-auto.herokuapp.com/order", bodyToCreateOrder).then(res => {
+            console.log(res)
+        }).catch(err => {
+            console.log(err)
+        })
     }
 
     function getLastItemInCart() {
@@ -93,7 +110,7 @@ const Checkout = (props) => {
                     }</p>
                     {
                         props.cart.length > 0 && (
-                            <button onClick={() => { handlePayment(); getLastItemInCart() }} className="check-out-btn">Payment</button>
+                            <button onClick={() => { handlePayment(); handleCreateImplictOrder(); getLastItemInCart() }} className="check-out-btn">Payment</button>
                         )
                     }
                     {
