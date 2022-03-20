@@ -3,6 +3,7 @@ import * as React from 'react';
 import { Table, Button, Modal, notification } from 'antd'
 import { DeleteOutlined } from '@ant-design/icons'
 import axios from 'axios'
+const { confirm } = Modal;
 
 const ProductManagement = (props) => {
     const [visible, setVisible] = useState(false)
@@ -14,20 +15,30 @@ const ProductManagement = (props) => {
     const files = useRef([])
 
     const handleDeleteProduct = (id) => {
-        axios.delete(`https://oto-auto.herokuapp.com/product/${id}`).then(res => {
-            props.setListProducts(res.data.data)
-            notification.success({
-                message: "Success",
-                description: "Delete product success",
-                duration: 3,
-            })
-        }).catch(err => {
-            notification.error({
-                message: "Failed",
-                description: err,
-                duration: 3,
-            })
+        confirm({
+            title: "Confirm",
+            content: "Do you want to delete this product",
+            onOk() {
+                axios.delete(`https://oto-auto.herokuapp.com/product/${id}`).then(res => {
+                    props.setListProducts(res.data.data)
+                    notification.success({
+                        message: "Success",
+                        description: "Delete product success",
+                        duration: 3,
+                    })
+                }).catch(err => {
+                    notification.error({
+                        message: "Failed",
+                        description: err,
+                        duration: 3,
+                    })
+                })
+            },
+            onCancel() {
+                return
+            }
         })
+
     }
 
     const openModalAddProduct = () => {
@@ -103,19 +114,27 @@ const ProductManagement = (props) => {
         const columns = [
             {
                 title: 'Name',
-                dataIndex: 'nameProduct'
+                render: (record) => {
+                    return <span style={{ textTransform: 'capitalize', color: '#ff5e57' }}>{record.nameProduct}</span>
+                }
             },
             {
                 title: 'Type',
-                dataIndex: 'typeProduct',
+                render: (record) => {
+                    return <span style={{ textTransform: 'capitalize' }}>{record.typeProduct}</span>
+                }
             },
             {
                 title: 'Price',
-                dataIndex: 'priceProduct'
+                render: (record) => {
+                    return <span style={{ fontWeight: 500 }}>{record.priceProduct} $</span>
+                }
             },
             {
                 title: 'Color',
-                dataIndex: 'color'
+                render: (record) => {
+                    return <span style={{ textTransform: 'capitalize' }}>{record.color}</span>
+                }
             },
             {
                 title: 'Discount',

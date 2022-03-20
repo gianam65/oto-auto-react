@@ -1,14 +1,17 @@
 import React from 'react'
-import { Table, Button, notification, Tooltip } from 'antd'
+import { Table, Button, notification, Tooltip, Modal } from 'antd'
 import { UserAddOutlined, UserDeleteOutlined } from '@ant-design/icons'
 import axios from 'axios'
+const { confirm } = Modal;
 
 const UserManagement = (props) => {
     function renderColumnsAdmin() {
         const columns = [
             {
                 title: 'Name',
-                dataIndex: 'nameAdmin'
+                render: (record) => {
+                    return <span style={{ textTransform: 'capitalize', color: '#ff5e57' }}>{record.nameAdmin}</span>
+                }
             },
             {
                 title: 'Email',
@@ -27,7 +30,7 @@ const UserManagement = (props) => {
                         color: record == 'superAdmin' ? "#ff5e57" : "#2a2a2a"
                     }}
                     >
-                        {record == 'superAdmin' ? 'Admin' : 'Employee'}
+                        {record == 'superAdmin' ? 'Super admin' : 'Admin'}
                     </span>
                 }
             },
@@ -60,38 +63,56 @@ const UserManagement = (props) => {
     }
 
     const handleDowngrade = (id) => {
-        let body = { role: "admin" }
-        axios.put(`https://oto-auto.herokuapp.com/admin/author/${id}`, body).then(res => {
-            props.setListAdmin(res.data.data)
-            notification.success({
-                message: "Success",
-                description: "Change role success",
-                duration: 3,
-            })
-        }).catch(err => {
-            notification.error({
-                message: "Error",
-                description: "Change role failed",
-                duration: 3,
-            })
+        confirm({
+            title: "Confirm",
+            content: "Do you want to downgrade role",
+            onOk() {
+                let body = { role: "admin" }
+                axios.put(`https://oto-auto.herokuapp.com/admin/author/${id}`, body).then(res => {
+                    props.setListAdmin(res.data.data)
+                    notification.success({
+                        message: "Success",
+                        description: "Change role success",
+                        duration: 3,
+                    })
+                }).catch(err => {
+                    notification.error({
+                        message: "Error",
+                        description: "Change role failed",
+                        duration: 3,
+                    })
+                })
+            },
+            onCancel() {
+                return
+            }
         })
     }
 
     const handleUpdateToAdmin = (id) => {
-        let body = { role: "superAdmin" }
-        axios.put(`https://oto-auto.herokuapp.com/admin/author/${id}`, body).then(res => {
-            props.setListAdmin(res.data.data)
-            notification.success({
-                message: "Success",
-                description: "Change role success",
-                duration: 3,
-            })
-        }).catch(err => {
-            notification.error({
-                message: "Error",
-                description: "Change role failed",
-                duration: 3,
-            })
+        confirm({
+            title: "Confirm",
+            content: "Do you want to upgrade role",
+            onOk() {
+                let body = { role: "superAdmin" }
+                axios.put(`https://oto-auto.herokuapp.com/admin/author/${id}`, body).then(res => {
+                    props.setListAdmin(res.data.data)
+                    notification.success({
+                        message: "Success",
+                        description: "Change role success",
+                        duration: 3,
+                    })
+                }).catch(err => {
+                    notification.error({
+                        message: "Error",
+                        description: "Change role failed",
+                        duration: 3,
+                    })
+                })
+            },
+            onCancel() {
+                return
+            }
         })
     }
     return (

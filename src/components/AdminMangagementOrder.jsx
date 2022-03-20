@@ -1,7 +1,8 @@
 import React from 'react'
-import { Table, Button, Tooltip, notification } from 'antd'
-import { DiffOutlined } from '@ant-design/icons'
+import { Table, Button, Tooltip, notification, Modal } from 'antd'
+import { DiffOutlined, EditOutlined } from '@ant-design/icons'
 import axios from 'axios'
+const { confirm } = Modal;
 
 const AdminMangagementOrder = (props) => {
     function renderColumn() {
@@ -9,7 +10,7 @@ const AdminMangagementOrder = (props) => {
             {
                 title: "Name customer",
                 render: (record) => {
-                    return <span style={{ textTransform: "capitilize" }}>
+                    return <span style={{ textTransform: "capitalize", color: "#ff5e57" }}>
                         {record.idCustomer.nameCustomer}
                     </span>
                 }
@@ -52,14 +53,22 @@ const AdminMangagementOrder = (props) => {
                 title: "Action",
                 render: (record) => {
                     return <div className="action-icon">
-                        <Button onClick={() => handleCreateOrder(record._id)}>
-                            {
-                                record.statusOrder != "success" &&
-                                <Tooltip placement='top' title="Create order">
-                                    <DiffOutlined className="delete-icon" />
-                                </Tooltip>
-                            }
-                        </Button>
+                        {
+                            record.statusOrder == "success"
+                                ?
+                                <Button onClick={() => handleRemoveOrder(record._id)}>
+                                    <Tooltip placement='top' title="Change order">
+                                        <EditOutlined className="delete-icon" />
+                                    </Tooltip>
+                                </Button>
+                                :
+                                <Button onClick={() => handleCreateOrder(record._id)}>
+                                    <Tooltip placement='top' title="Create order">
+                                        <DiffOutlined className="delete-icon" />
+                                    </Tooltip>
+                                </Button>
+
+                        }
                     </div>
                 }
             }
@@ -67,16 +76,46 @@ const AdminMangagementOrder = (props) => {
         return columns
     }
 
+    const handleRemoveOrder = (id) => {
+        confirm({
+            title: "Confirm",
+            content: "Do you want to change status this order",
+            onOk() {
+                const statusOrder = { statusOrder: "pending" }
+                axios.put(`https://oto-auto.herokuapp.com/order/submit/${id}`, statusOrder).then(res => {
+                    props.setOrders(res.data.data)
+                    notification.success({
+                        message: "Success",
+                        description: "Change status order success",
+                        duration: 3,
+                    })
+                }).catch(err => console.log(err))
+            },
+            onCancel() {
+                return
+            }
+        })
+    }
+
     const handleCreateOrder = (id) => {
-        const statusOrder = { statusOrder: "success" }
-        axios.put(`https://oto-auto.herokuapp.com/order/submit/${id}`, statusOrder).then(res => {
-            props.setOrders(res.data.data)
-            notification.success({
-                message: "Success",
-                description: "Create order success",
-                duration: 3,
-            })
-        }).catch(err => console.log(err))
+        confirm({
+            title: "Confirm",
+            content: "Do you want to add this order",
+            onOk() {
+                const statusOrder = { statusOrder: "success" }
+                axios.put(`https://oto-auto.herokuapp.com/order/submit/${id}`, statusOrder).then(res => {
+                    props.setOrders(res.data.data)
+                    notification.success({
+                        message: "Success",
+                        description: "Create order success",
+                        duration: 3,
+                    })
+                }).catch(err => console.log(err))
+            },
+            onCancel() {
+                return
+            }
+        })
     }
 
     return (

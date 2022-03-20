@@ -1,10 +1,12 @@
 import * as React from 'react';
 import { useState } from 'react';
 import { Chart } from "react-google-charts";
-import { Empty } from 'antd';
+import { Empty, Radio } from 'antd';
+import { BarChartOutlined, LineChartOutlined } from '@ant-design/icons'
 
 const AdminChart = (props) => {
     const [selectedView, setSelectedView] = useState('All time')
+    const [typeChart, setTypeChart] = useState('Bar')
     const options = {
         chart: {
             title: "Statistics of total revenue by day",
@@ -20,7 +22,7 @@ const AdminChart = (props) => {
 
     function customChartDataByDay(type, datas) {
         const today = new Date().toLocaleDateString();
-        const unixADayTime = 86400000 // a week;
+        const unixADayTime = 86400000 // a day;
         let result = datas
         switch (type) {
             case "7days":
@@ -89,14 +91,24 @@ const AdminChart = (props) => {
                     <option value={"90days"} className="view-item">90 days ago</option>
                 </select>
             </div>
+            <Radio.Group onChange={(e) => setTypeChart(e.target.value)} value={typeChart}>
+                <Radio value={"Bar"}>
+                    <BarChartOutlined style={{ marginRight: 5 }} />
+                    Bar chart
+                </Radio>
+                <Radio value={"LineChart"}>
+                    <LineChartOutlined style={{ marginRight: 5 }} />
+                    Line chart
+                </Radio>
+            </Radio.Group>
             {groupByTimeAndCountTotal().length > 0
                 ?
                 <Chart
-                    chartType="Bar"
+                    chartType={typeChart}
                     options={options}
                     data={data}
                     width="100%"
-                    height="600px"
+                    height="500px"
                     legendToggle
                 />
                 :
