@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useState } from 'react'
+import * as React from 'react';
 import { Empty } from 'antd'
 import { ShoppingCartOutlined, CloseOutlined } from '@ant-design/icons'
 import DATAIMAGES from '../default-data/data.js'

@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react';
 import { useState, useEffect } from 'react'
 import { Tabs } from 'antd'
 import UserManagement from './UserManagement'

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import * as React from 'react';
 import { Link } from 'react-router-dom'
 import { SRLWrapper } from 'simple-react-lightbox'
 import axios from 'axios'

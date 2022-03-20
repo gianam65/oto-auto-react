@@ -1,4 +1,5 @@
-import { useState, useRef, React } from 'react'
+import { useState, useRef } from 'react'
+import * as React from 'react';
 import { Table, Button, Modal, notification } from 'antd'
 import { DeleteOutlined } from '@ant-design/icons'
 import axios from 'axios'
