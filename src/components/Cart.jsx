@@ -53,7 +53,7 @@ const Cart = (props) => {
                                         props.cart.map(item => {
                                             return (
                                                 <li className="cart-detail-item">
-                                                    <img src={item.product.imageProduct[0] && DATAIMAGES[Math.floor(Math.random() * 14)]} className="cart-detail-thumb" style={{ width: 100, height: 100 }} />
+                                                    <img src={item.product && item.product.imageProduct && item.product.imageProduct[0] && DATAIMAGES[Math.floor(Math.random() * 14)]} className="cart-detail-thumb" style={{ width: 100, height: 100 }} />
                                                     <div className="cart-detail-desc">
                                                         <div className="cart-desc-title">
                                                             <p className="cart-detail-name">{item.product.nameProduct}</p>

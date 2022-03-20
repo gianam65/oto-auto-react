@@ -52,6 +52,17 @@ h1,h2,h3,h4,h5,h6 {
     display: block;
 }
 
+.select-view-wrapper {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.manage-product .ant-empty {
+    min-height: 350px;
+}
+
 .go-to-top {
     position: fixed;
     bottom: 5%;

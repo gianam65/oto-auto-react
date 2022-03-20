@@ -1,20 +1,53 @@
 import * as React from 'react';
+import { useState } from 'react';
 import { Chart } from "react-google-charts";
+import { Empty } from 'antd';
 
 const AdminChart = (props) => {
+    const [selectedView, setSelectedView] = useState('All time')
     const options = {
         chart: {
             title: "Statistics of total revenue by day",
-            subtitle: "Sales and Profit: 2022",
         },
     };
     const data = [
         [
-            "Day",
+            selectedView,
             "Total revenue",
         ],
         ...groupByTimeAndCountTotal()
     ];
+
+    function customChartDataByDay(type, datas) {
+        const today = new Date().toLocaleDateString();
+        const unixADayTime = 86400000 // a week;
+        let result = datas
+        switch (type) {
+            case "7days":
+                const aWeekAgo2UnixTime = Date.parse(today) - 7 * unixADayTime
+                result = datas.filter(data => {
+                    return Date.parse(data[0]) <= Date.parse(today) && Date.parse(data[0]) >= aWeekAgo2UnixTime
+                })
+                break;
+            case "30days":
+                const aMonthAgo2UnixTime = Date.parse(today) - 30 * unixADayTime
+                result = datas.filter(data => {
+                    return Date.parse(data[0]) <= Date.parse(today) && Date.parse(data[0]) >= aMonthAgo2UnixTime
+                })
+                break;
+            case "90days":
+                const threeMonthAgo2UnixTime = Date.parse(today) - 90 * unixADayTime
+                result = datas.filter(data => {
+                    return Date.parse(data[0]) <= Date.parse(today) && Date.parse(data[0]) >= threeMonthAgo2UnixTime
+                })
+                break;
+            default:
+                result = datas
+                break;
+
+        }
+        return result
+    }
 
     function groupByTimeAndCountTotal() {
         const groupByTime = props.orders.filter(item => item.statusOrder == "success").reduce(function (acc, curr) {
@@ -42,18 +75,34 @@ const AdminChart = (props) => {
         }).map(item => {
             return [item.timeOder, item.totalPrice]
         })
-        return result
+        return customChartDataByDay(selectedView, result)
     }
 
     return (
-        <Chart
-            chartType="Bar"
-            options={options}
-            data={data}
-            width="100%"
-            height="500px"
-            legendToggle
-        />
+        <div className="manage-product">
+            <span className="title">Statistic profit</span>
+            <div className="select-view-wrapper">
+                <select style={{ maxWidth: 300 }} onChange={e => setSelectedView(e.target.value)} className="filter-select">
+                    <option value={"All time"} className="view-item">All time</option>
+                    <option value={"7days"} className="view-item">7 days ago</option>
+                    <option value={"30days"} className="view-item">30 days ago</option>
+                    <option value={"90days"} className="view-item">90 days ago</option>
+                </select>
+            </div>
+            {groupByTimeAndCountTotal().length > 0
+                ?
+                <Chart
+                    chartType="Bar"
+                    options={options}
+                    data={data}
+                    width="100%"
+                    height="600px"
+                    legendToggle
+                />
+                :
+                <Empty />
+            }
+        </div>
     )
 }
 

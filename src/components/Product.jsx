@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
-import { Empty, Spin } from 'antd'
+import { Empty, Spin, notification } from 'antd'
 import { Link } from 'react-router-dom'
 import ModalViewProduct from './ModalViewProduct'
 import axios from 'axios'
@@ -109,11 +109,21 @@ const Product = (props) => {
             if (isAlreadyInCart >= 0) {
                 props.cart[isAlreadyInCart].amountProduct += 1
                 const increaseAmountCart = [...props.cart]
+                notification.open({
+                    message: "Success",
+                    description: "Item already in cart",
+                    duration: 3,
+                })
                 const body = { listProduct: increaseAmountCart }
                 props.setNewCart(body)
             } else {
                 const params = { listProduct: newCart }
                 props.setNewCart(params)
+                notification.success({
+                    message: "Success",
+                    description: "Add product success",
+                    duration: 3,
+                })
             }
         }
     }
