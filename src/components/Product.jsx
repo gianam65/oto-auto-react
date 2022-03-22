@@ -26,12 +26,13 @@ const Product = (props) => {
     const [loading, setLoading] = useState(true)
     const [searchValue, setSearchValue] = useState('')
     const [activeMenu, setActiveMenu] = useState('all products')
-    const [typeFilter, setTypeFilter] = useState('all')
+    const [typeFilter, setTypeFilter] = useState('type')
     const [filterPrice, setFilterPrice] = useState(0)
     const [color, setColor] = useState('')
     const [visibleVoucher, setVisibleVoucher] = useState(false)
     const [visibleModalViewProduct, setVisibleModalViewProduct] = useState(false)
     const [selectedProduct, setSelectedProduct] = useState(null)
+    const [indexImage, setIndexImage] = useState(null)
     useEffect(() => {
         const loadProducts = async () => {
             const response = await axios("https://oto-auto.herokuapp.com/product")
@@ -87,9 +88,10 @@ const Product = (props) => {
         return result;
     }
 
-    function handleViewProduct(id) {
+    function handleViewProduct(id, index) {
         const productItem = productsList.filter(product => product._id == id)
         setVisibleModalViewProduct(true)
+        setIndexImage(index)
         setSelectedProduct(...productItem)
     }
 
@@ -216,9 +218,9 @@ const Product = (props) => {
                                 <ul className="product-list">
                                     {
                                         handleFilterProduct().length > 0
-                                            ? handleFilterProduct().map(product =>
+                                            ? handleFilterProduct().map((product, index) =>
                                                 <div key={product._id} className='wrapper-product'>
-                                                    <img src={product.imageProduct[0] && DATAIMAGES[Math.floor(Math.random() * 14)]} onClick={() => handleViewProduct(product._id)} style={{ width: '100%', height: '200px' }} />
+                                                    <img src={typeFilter == "type" ? DATAIMAGES[index] : DATAIMAGES[Math.floor(Math.random() * 15)]} onClick={() => handleViewProduct(product._id, index)} style={{ width: '100%', height: '200px' }} />
                                                     <div className="product-item-id">
                                                         <div className="name-and-reviews">
                                                             <p className="product-name">{product.nameProduct}</p>
@@ -243,6 +245,7 @@ const Product = (props) => {
                 selectedProduct={selectedProduct}
                 handleCloseModalView={() => handleCloseModalView()}
                 visibleModalViewProduct={visibleModalViewProduct}
+                indexImage={indexImage}
             />
             }
         </div>

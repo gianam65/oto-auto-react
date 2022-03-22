@@ -344,6 +344,7 @@
     display: flex;
     width: 100%;
     background: var(--text-color);
+    justify-content: center;
 }
 
 .delivery-item {

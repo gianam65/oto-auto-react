@@ -112,7 +112,7 @@ const Home = () => {
                     New arrivals
                 </h2>
                 <span className="content-desc">
-                    Here you can check our new products with fair price on fenco
+                    Here you can check our new products with fair price on oto-auto
                 </span>
                 <ul className="menu-products-list">
                     {
@@ -133,9 +133,9 @@ const Home = () => {
                                 <SRLWrapper>
                                     <ul className="new-product-list">
                                         {
-                                            handleFilterTypeProduct().map((item) => (
+                                            handleFilterTypeProduct().map((item, index) => (
                                                 <li key={item._id} className="new-product-item">
-                                                    <img src={item.imageProduct[0] && DATAIMAGES[Math.floor(Math.random() * 14)]} alt="" className="new-product-img" />
+                                                    <img src={activeMenu == 0 ? DATAIMAGES[index] : DATAIMAGES[Math.floor(Math.random() * DATAIMAGES.length - 5)]} alt="" style={{ height: 200, objectFit: "cover" }} className="new-product-img" />
                                                     <p className="new-product-name">Sneaker Splash VRT</p>
                                                     <span className="new-product-price">$3.99</span>
                                                 </li>

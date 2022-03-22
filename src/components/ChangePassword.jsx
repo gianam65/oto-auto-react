@@ -29,6 +29,7 @@ const ChangePassword = () => {
                         placement: "topRight"
 
                     })
+                    window.location.href = window.location.origin
                 } else {
                     notification.error({
                         message: "Failure to change",

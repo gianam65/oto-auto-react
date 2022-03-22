@@ -83,24 +83,28 @@ const AdminChart = (props) => {
     return (
         <div className="manage-product">
             <span className="title">Statistic profit</span>
-            <div className="select-view-wrapper">
-                <select style={{ maxWidth: 300 }} onChange={e => setSelectedView(e.target.value)} className="filter-select">
-                    <option value={"All time"} className="view-item">All time</option>
-                    <option value={"7days"} className="view-item">7 days ago</option>
-                    <option value={"30days"} className="view-item">30 days ago</option>
-                    <option value={"90days"} className="view-item">90 days ago</option>
-                </select>
-            </div>
-            <Radio.Group onChange={(e) => setTypeChart(e.target.value)} value={typeChart}>
-                <Radio value={"Bar"}>
-                    <BarChartOutlined style={{ marginRight: 5 }} />
-                    Bar chart
-                </Radio>
-                <Radio value={"LineChart"}>
-                    <LineChartOutlined style={{ marginRight: 5 }} />
-                    Line chart
-                </Radio>
-            </Radio.Group>
+            {groupByTimeAndCountTotal().length > 0 &&
+                <div className="select-view-wrapper">
+                    <select style={{ maxWidth: 300 }} onChange={e => setSelectedView(e.target.value)} className="filter-select">
+                        <option value={"All time"} className="view-item">All time</option>
+                        <option value={"7days"} className="view-item">7 days ago</option>
+                        <option value={"30days"} className="view-item">30 days ago</option>
+                        <option value={"90days"} className="view-item">90 days ago</option>
+                    </select>
+                </div>
+            }
+            {groupByTimeAndCountTotal().length > 0 &&
+                <Radio.Group onChange={(e) => setTypeChart(e.target.value)} value={typeChart}>
+                    <Radio value={"Bar"}>
+                        <BarChartOutlined style={{ marginRight: 5 }} />
+                        Bar chart
+                    </Radio>
+                    <Radio value={"LineChart"}>
+                        <LineChartOutlined style={{ marginRight: 5 }} />
+                        Line chart
+                    </Radio>
+                </Radio.Group>
+            }
             {groupByTimeAndCountTotal().length > 0
                 ?
                 <Chart

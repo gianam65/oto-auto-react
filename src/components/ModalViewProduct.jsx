@@ -17,7 +17,7 @@ const ModalViewProduct = (props) => {
             <div className='product-detail-wrapper'>
                 <div className="product-detail">
                     <div className="product-detail-img">
-                        <img src={productItem && productItem.imageProduct[0] && BACKUPURL} alt="" />
+                        <img src={DATAIMAGES[props.indexImage]} style={{ width: 350, height: 490, objectFit: 'cover' }} alt="" />
                     </div>
                     <div className="product-detail-desc">
                         <span className="product-detail-name">
